@@ -29,7 +29,7 @@ admin <- mongo(db = "admin")
 admin$run('{"listDatabases":1}')
 ```
 
-Funnny... test database doesn't even exist! But we can ask for its collections.
+Funny... test database doesn't even exist! But we can ask for its collections.
 
 ```{r}
 m$run('{"listCollections":1}')

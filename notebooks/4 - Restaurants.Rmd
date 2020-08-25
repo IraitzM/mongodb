@@ -117,7 +117,7 @@ It certainly is more spectacular when used inside an application that draws maps
 
 ![](images/geo.png)
 
-Now, coffee houses... well anything with the coffee text on it. Text indexes will help us with that. We can look on a single field.
+Now, coffee houses... well anything with *coffee* on it. Text indexes will help us with that. We can look on a single field.
 
 ```mongodb
 r$index(add = '{ "name" : "text" }')

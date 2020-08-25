@@ -34,7 +34,7 @@ a$aggregate('[
 ]')
 ```
 
-Good thing is that we can put different stages at will within our pipeline. So imagine we would like to know which hobby is the most supported one. Given that we will work at document level, we will need to unwind all those values contained inside hobbies arrays.
+Good thing is that we can put different stages at will inside our pipeline. So imagine we would like to know which hobby is the most supported one. Given that we will work at document level, we will need to unwind all those values contained inside hobbies arrays.
 
 ```{r}
 a$aggregate('[
@@ -42,7 +42,7 @@ a$aggregate('[
 ]')
 ```
 
-No we have a document per hobby, so we can group them back, selecting the hobby as _id and counting the number of documents falling into that group.
+Now we have a document per hobby, so we can group them back, selecting the hobby as _id and counting the number of documents falling into that group.
 
 ```{r}
 a$aggregate('[

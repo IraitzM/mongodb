@@ -27,7 +27,7 @@ q <- '{
 a$run(q)
 ```
 
-Or use methods provided by our driver.
+Or use methods provided by our driver, library or client.
 
 ```{r}
 a$insert('{"name": "bob", "age": 42, "isActive" : true, "hobbies": ["surf"]}')
@@ -40,7 +40,7 @@ All inserted.
 
 ## Read
 
-More than read, one of the main functions to use with this type of databases is find. A functionality that applies a filter to our data and only return the information that fits into the filter for a given collection.
+More than read, one of the main functions to use with this type of databases is find. A functionality that applies a filter to our data and only returns the information that fits into the filter for a given collection.
 
 ```{r}
 df <- a$find('{}')
@@ -57,9 +57,9 @@ Or somebody 22 years old and active.
 a$find('{"age" : 22, "isActive" : true}')
 ```
 
-Great! And what if we would like to find adults ( age > 18). That cannot be done using equalities... MongoDB has a concept called [operators](https://docs.mongodb.com/manual/reference/operator/) for that.
+Great! And what if we would like to find adults ( age > 18 ). That cannot be done using equalities... MongoDB has a concept called [operators](https://docs.mongodb.com/manual/reference/operator/) for that.
 
-* Comparison: $eq, $ne, $gt, $lte,...
+* Comparison: $eq, $ne, $gt, $lte
 * Logical: $and, $or, $not
 * Element: $exists, $type
 
@@ -76,14 +76,14 @@ Or somebody active, over 30 and where the field hobbies exists.
 ```{r}
 a$find('{"$and" : [{"age" : {"$gte" : 30}},{"isActive" : {"$eq" : true}},{"hobbies" : { "$exists" : true}}]}')
 ```
-Great. If you see the whole document is returned from the database for every query. That makes sense when the whole document is required (as a key-value store) but what if we would like to only address part of the information? (Kind of like columnar stores)
+Great. If you see the whole document is returned from the database for every query. That makes sense when the whole document is required (working like a key-value store) but what if we would like to only address part of the information? (Kind of like columnar stores)
 
 That's what *projections* are for. Using projections, one can identify which part of the document is required. In mongolite, projection definition is called fields.
 
 ```{r}
 a$find(query = '{"isActive" : true}', fields = '{"name" : true, "age" : 1}')
 ```
-Wait, what is that _id? That's the index of the document. Every document inside a collection has  a unique identifier so that even two documents with same properties will be identified by their _id. That's actually the key in our key-value or column store key functionality.
+Wait, what is that _id? That's the index of the document. Every document inside a collection has a unique identifier so that even two documents with same properties will be identified by their _id. That's actually the key in our key-value or column store-like functionality.
 
 ```{r}
 a$insert('{"name" : "peter", "age" : 52}')
@@ -102,7 +102,7 @@ a$insert('{"_id" : 1, "name" : "peter", "age" : 52}')
 a$find(query = '{}', fields = '{"name" : true, "age" : 1}')
 ```
 
-We can set _id projection to false and that way the field we initially wanted will be the only ones showing.
+We can set _id projection to false and that way the fields we initially wanted will be the only ones showing.
 
 ```{r}
 a$find(query = '{}', fields = '{"name" : true, "age" : 1, "_id" : false}')
@@ -144,12 +144,13 @@ a$update('{"name" : "peter", "age" : 52}', '{"$set": {"hobbies" : 5}}', multiple
 a$find('{"name" : "peter"}')
 ```
 
-There also exist operators to rename a field.
+There also exists an operator to rename a field.
 
 ```{r}
 a$update('{"name" : "peter", "age" : 52}', '{"$rename": {"age" : "yearsold"}}')
 ```
-Or increment a value inside a field.
+
+Or to increment a value inside a field.
 
 ```{r}
 a$update('{"name" : "peter", "age" : 52}', '{"$inc": {"yearsold" : 1.2}}')
@@ -158,7 +159,7 @@ a$update('{"name" : "peter", "age" : 52}', '{"$inc": {"yearsold" : 1.2}}')
 a$find('{"name" : "peter"}')
 ```
 
-Some things happened there. We incremented a field that doesn't exists in a given document and forces the rest of the documents that contain that field to be reinterpreted as such.
+Some things happened there. We incremented a field that doesn't exists in a given document and that forces the rest of the documents that contain the field to be reinterpreted to the same type.
 
 That's odd but MongoDB is like that...
 
@@ -201,5 +202,5 @@ a$remove('{"name" : "peter", "age" : {"$ne" : 43}}')
 a$find()
 ```
 
-Even the peter that had no age field was removes, as it matches the inequality.
+Even the "peter" that had no age field was removed, as it matches the inequality.
 
