@@ -1,0 +1,62 @@
+---
+title: "First steps with MongoDB"
+output: html_notebook
+---
+
+As always happens, when we want to interact with a database, a driver is needed. Someone who translates our needs to the serving system. In order to interact with MongoDB from R, [mongolite](https://jeroen.github.io/mongolite/) package will help us doing so.
+
+```{r}
+library(mongolite)
+```
+
+Easy-peasy! Now let's connect to the database.
+
+```{r}
+m <- mongo()
+```
+
+As simple as that! It is worth noticing that by default it will connect to:
+
+* Host: localhost
+* Port: 27017
+* Database: test
+* Collection: test
+
+So it should be empty so far. We can actually ask for databases when connected to the admin collection.
+
+```{r}
+admin <- mongo(db = "admin")
+admin$run('{"listDatabases":1}')
+```
+
+Funnny... test database doesn't even exist! But we can ask for its collections.
+
+```{r}
+m$run('{"listCollections":1}')
+```
+We can even insert some information.
+
+```{r}
+m$insert('{"name" : "test"}')
+```
+Inserted! But where?
+
+```{r}
+m$run('{"listCollections":1}')
+```
+Wait the collection got created! And the database?
+
+```{r}
+admin$run('{"listDatabases":1}')
+```
+
+The database too! So the information is there.
+
+```{r}
+m$find()
+```
+
+So, lesson number 1: 
+
+* Typos can get us into trouble when using MongoDB!
+

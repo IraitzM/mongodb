@@ -1,0 +1,160 @@
+---
+title: "Restaurants"
+output: html_notebook
+---
+
+We will do an exercise using some more complicated information inside data. There is a file containing restaurant information. An array of JSONs that can be easily ingested.
+
+```{r}
+library(mongolite)
+r <- mongo(db = "test", collection = "restaurants")
+r$import(file("restaurants.json"))
+```
+
+Done! How many documents are there?
+
+```{r}
+r$count()
+```
+
+That's simple enough but trying to infer the schema could be really tricky. For that it is much easier to use MongoDB's [Compass](https://www.mongodb.com/products/compass) tool that allows to explore the schema interactively.
+
+![](images/schema.png)
+
+From there it can be easily inferred the information contained inside our collection, the percentage of data belonging to each data type inside a field or even the query to filter said information.
+
+![](images/schema2.png)
+
+Even if we have geospatial information we can get a map visualizing where each document information is geographically located.
+
+![](images/schema3.png)
+Most of what we have done inside this notebook can be done using Compass in a more visuall manner. Importing documents for example.
+
+![](images/import.png)
+
+Or aggregation pipelines.
+
+![](images/aggregation.png)
+
+Let's do some simple exercises.
+
+### How many restaurants are located in Mahattan?
+
+```{r}
+df <- r$find('')
+nrow(df)
+```
+
+### How many Chinese or Japanese restaurants?
+
+```{r}
+df <- r$find('')
+nrow(df)
+```
+
+### Any restaurant that has been closed latelly?
+
+```{r}
+df <- r$find('')
+nrow(df)
+```
+
+### Show top 10 restaurants in Mahattan
+
+We can also, for example, calculate the average score of the restaurants in Manhattan and sort them by grades in descending order, showing just the top 10.
+
+```{r}
+q <- '[
+            {"$match" : {}},
+            {"$unwind" : ""},
+            {"$group" : {"_id" : "", "avggrade" : {}}},
+            {"$sort" : {}},
+            {"$limit" : 10}
+]'
+r$aggregate(q)
+```
+
+How efficient is that query? As we already discussed, the only indexed field is the _id field so when we condition that aggregation by *borough* it needs to scan the whole collection to get the right documents to process.
+
+![](images/explain.png)
+
+
+```{r}
+system.time(r$find('{"borough" : "Mahattan"}'))
+```
+
+Not bad but we can do a little bit better thanks to indexes. We can create an index on that field using Compass or just by calling following command.
+
+```{r}
+r$index(add = '{"borough" : 1}')
+```
+![](images/index.png)
+
+Thanks to that our query runs a little bit faster.
+
+```{r}
+system.time(r$find('{"borough" : "Mahattan"}'))
+```
+![](images/explainidx.png)
+
+Indexes can be really useful and being an operational database for XXI century applications, text and geospatial searches are key. Imagine that you would like to complement the previous request as follows...
+
+# Find top 10 coffee houses near me
+
+First, we will need what means "near me". That is given my location and restaurant location I need to do a search for those that are at a given distance.
+
+```{r}
+r$index(add = '{ "address.coord" : "2d" }')
+```
+
+With that index created we can look for documents whose informed location is close to a given location.
+
+```{r}
+r$find('{ "address.coord" : { "$geoWithin" : { "$center" : [ [-74, 40.74 ] , 0.01 ] } } }')
+```
+
+It certainly is more spectacular when used inside an application that draws maps.
+
+![](images/geo.png)
+
+Now, coffee houses... well anything with the coffee text on it. Text indexes will help us with that. We can look on a single field.
+
+```mongodb
+r$index(add = '{ "name" : "text" }')
+```
+
+Look in different fields.
+
+```mongodb
+r$index(add = '{ "name" : "text", "cuisine" : "text" }')
+```
+
+Or look on any text field using a wildcard.
+
+```{r}
+r$index(add = '{ "$**" : "text"}')
+```
+
+It takes a while but thanks to this we can use the $text and $search operators and look for coffee houses.
+
+```{r}
+r$find('{ "$text": { "$search": "cafe" } }')
+```
+
+As you see uppercase and lowercase now doesn't matter that much. We can also negate some terms such as tea.
+
+```{r}
+r$find('{ "$text": { "$search": "cafe -tea" } }')
+```
+
+So it should be easy now to at least filter the two requirements for our top 10 coffee houses nearby.
+
+```{r}
+r$find('{"$and" : [{ "address.coord" : { "$geoWithin" : { "$center" : [ [-74, 40.74 ] , 0.01 ] } } }, { "$text": { "$search": "cafe -tea" } }]}')
+```
+
+Not as impressive as in Compass :)
+
+![](images/closecoffee.png)
+
+
