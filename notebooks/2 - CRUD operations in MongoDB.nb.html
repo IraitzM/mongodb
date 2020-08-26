@@ -1766,7 +1766,7 @@ a &lt;- mongo(db = &quot;test&quot;, collection = &quot;agenda&quot;)</code></pr
 <!-- rnb-text-begin -->
 <div id="create" class="section level2">
 <h2>Create</h2>
-<p>We now know that doesn’t matter if they don’t exist, mongo will create them or return no data found because it’s really hard to get errors from MongoDB. We can run MongoDB run command with native MongoDB syntax.</p>
+<p>We now know that doesn’t matter if the collection or the database don’t exist, MongoDB will create them or return no data found because it’s really hard to get errors from MongoDB. We can run MongoDB run command with native MongoDB syntax.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucSA8LSAneyBcbiAgXCJpbnNlcnRcIjogXCJhZ2VuZGFcIiwgXG4gIFwiZG9jdW1lbnRzXCI6IFt7XCJuYW1lXCI6IFwic3VlXCIsIFwiYWdlXCI6IDE5ICwgXCJpc0FjdGl2ZVwiIDogdHJ1ZSwgXCJob2JiaWVzXCI6IFtcInBhZGVsXCIsXCJzdXJmXCJdfV0sXG4gIFwiYnlwYXNzRG9jdW1lbnRWYWxpZGF0aW9uXCIgOiB0cnVlfSdcbmEkcnVuKHEpXG5gYGAifQ== -->
@@ -1785,7 +1785,36 @@ $ok
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Or use methods provided by our driver.</p>
+<p>That’s fine but usually our driver, library or client will provide simpler methods to do the same thing. In this case mongolite implements several of the routines often used in MongoDB.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYVxuYGBgIn0= -->
+<pre class="r"><code>a</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiPE1vbmdvIGNvbGxlY3Rpb24+ICdhZ2VuZGEnIFxuICRhZ2dyZWdhdGUocGlwZWxpbmUgPSBcInt9XCIsIG9wdGlvbnMgPSBcIntcXFwiYWxsb3dEaXNrVXNlXFxcIjp0cnVlfVwiLCBoYW5kbGVyID0gTlVMTCwgcGFnZXNpemUgPSAxMDAwLCBpdGVyYXRlID0gRkFMU0UpIFxuICRjb3VudChxdWVyeSA9IFwie31cIikgXG4gJGRpc2Nvbm5lY3QoZ2MgPSBUUlVFKSBcbiAkZGlzdGluY3Qoa2V5LCBxdWVyeSA9IFwie31cIikgXG4gJGRyb3AoKSBcbiAkZXhwb3J0KGNvbiA9IHN0ZG91dCgpLCBic29uID0gRkFMU0UsIHF1ZXJ5ID0gXCJ7fVwiLCBmaWVsZHMgPSBcInt9XCIsIHNvcnQgPSBcIntcXFwiX2lkXFxcIjoxfVwiKSBcbiAkZmluZChxdWVyeSA9IFwie31cIiwgZmllbGRzID0gXCJ7XFxcIl9pZFxcXCI6MH1cIiwgc29ydCA9IFwie31cIiwgc2tpcCA9IDAsIGxpbWl0ID0gMCwgaGFuZGxlciA9IE5VTEwsIHBhZ2VzaXplID0gMTAwMCkgXG4gJGltcG9ydChjb24sIGJzb24gPSBGQUxTRSkgXG4gJGluZGV4KGFkZCA9IE5VTEwsIHJlbW92ZSA9IE5VTEwpIFxuICRpbmZvKCkgXG4gJGluc2VydChkYXRhLCBwYWdlc2l6ZSA9IDEwMDAsIHN0b3Bfb25fZXJyb3IgPSBUUlVFLCAuLi4pIFxuICRpdGVyYXRlKHF1ZXJ5ID0gXCJ7fVwiLCBmaWVsZHMgPSBcIntcXFwiX2lkXFxcIjowfVwiLCBzb3J0ID0gXCJ7fVwiLCBza2lwID0gMCwgbGltaXQgPSAwKSBcbiAkbWFwcmVkdWNlKG1hcCwgcmVkdWNlLCBxdWVyeSA9IFwie31cIiwgc29ydCA9IFwie31cIiwgbGltaXQgPSAwLCBvdXQgPSBOVUxMLCBzY29wZSA9IE5VTEwpIFxuICRyZW1vdmUocXVlcnksIGp1c3Rfb25lID0gRkFMU0UpIFxuICRyZW5hbWUobmFtZSwgZGIgPSBOVUxMKSBcbiAkcmVwbGFjZShxdWVyeSwgdXBkYXRlID0gXCJ7fVwiLCB1cHNlcnQgPSBGQUxTRSkgXG4gJHJ1bihjb21tYW5kID0gXCJ7XFxcInBpbmdcXFwiOiAxfVwiLCBzaW1wbGlmeSA9IFRSVUUpIFxuICR1cGRhdGUocXVlcnksIHVwZGF0ZSA9IFwie1xcXCIkc2V0XFxcIjp7fX1cIiwgZmlsdGVycyA9IE5VTEwsIHVwc2VydCA9IEZBTFNFLCBtdWx0aXBsZSA9IEZBTFNFKSBcbiJ9 -->
+<pre><code>&lt;Mongo collection&gt; &#39;agenda&#39; 
+ $aggregate(pipeline = &quot;{}&quot;, options = &quot;{\&quot;allowDiskUse\&quot;:true}&quot;, handler = NULL, pagesize = 1000, iterate = FALSE) 
+ $count(query = &quot;{}&quot;) 
+ $disconnect(gc = TRUE) 
+ $distinct(key, query = &quot;{}&quot;) 
+ $drop() 
+ $export(con = stdout(), bson = FALSE, query = &quot;{}&quot;, fields = &quot;{}&quot;, sort = &quot;{\&quot;_id\&quot;:1}&quot;) 
+ $find(query = &quot;{}&quot;, fields = &quot;{\&quot;_id\&quot;:0}&quot;, sort = &quot;{}&quot;, skip = 0, limit = 0, handler = NULL, pagesize = 1000) 
+ $import(con, bson = FALSE) 
+ $index(add = NULL, remove = NULL) 
+ $info() 
+ $insert(data, pagesize = 1000, stop_on_error = TRUE, ...) 
+ $iterate(query = &quot;{}&quot;, fields = &quot;{\&quot;_id\&quot;:0}&quot;, sort = &quot;{}&quot;, skip = 0, limit = 0) 
+ $mapreduce(map, reduce, query = &quot;{}&quot;, sort = &quot;{}&quot;, limit = 0, out = NULL, scope = NULL) 
+ $remove(query, just_one = FALSE) 
+ $rename(name, db = NULL) 
+ $replace(query, update = &quot;{}&quot;, upsert = FALSE) 
+ $run(command = &quot;{\&quot;ping\&quot;: 1}&quot;, simplify = TRUE) 
+ $update(query, update = &quot;{\&quot;$set\&quot;:{}}&quot;, filters = NULL, upsert = FALSE, multiple = FALSE) </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>So, <strong>insert</strong> is one of them, allowing us to simplify our code (just a bit).</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSRpbnNlcnQoJ3tcIm5hbWVcIjogXCJib2JcIiwgXCJhZ2VcIjogNDIsIFwiaXNBY3RpdmVcIiA6IHRydWUsIFwiaG9iYmllc1wiOiBbXCJzdXJmXCJdfScpXG5gYGAifQ== -->
@@ -1821,7 +1850,7 @@ a$insert(str)</code></pre>
 </div>
 <div id="read" class="section level2">
 <h2>Read</h2>
-<p>More than read, one of the main functions to use with this type of databases is find. A functionality that applies a filter to our data and only return the information that fits into the filter for a given collection.</p>
+<p>More than read, one of the main functions to use with this type of databases is <strong>find</strong>. A functionality that applies a filter to our data and only returns the information that fits into said filter for a given collection.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGYgPC0gYSRmaW5kKCd7fScpXG5kZlxuYGBgIn0= -->
@@ -1843,7 +1872,7 @@ df</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSRmaW5kKCd7XCJuYW1lXCIgOiBcInN1ZVwifScpXG5gYGAifQ== -->
 <pre class="r"><code>a$find(&#39;{&quot;name&quot; : &quot;sue&quot;}&#39;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MSwibmNvbCI6NH0sInJkZiI6Ikg0c0lBQUFBQUFBQUEyMVF5MDdETUJEY09EYWxsZ0pJZkVkeWdBdFhKTVFISUpCNmRSNXRMWUlkMlE3dzlZVjE4QUsxZXJBOE85N1oyZkhUdytaV2JpUUFsTUNCUVNrUWduaDVmcXp2QURqRG9zQ0hkYncvc2VrYUFjZHo5ZStoOVBPQVY3VlFBTEZGSmt4MWtTUXNTY1NrK21GTUJmZXoyMlptd3FpM3dTY1ZwOFpJa3FuYUVUelgvcjRMK3AzcTFkNjJyWTdxbzVGclp6OGFHbHY5TFhqczI0M0treStSc2xkQk5Wc1gzUUVPbVdSbHA2Q3RRUkdMVVVVbUxseEdYTTRtYnRIWDNYNDJyL1ZOOWwzVkNjeC9MTmxYR2lYU3FMUEI3TFNoM0dKVTdlK25YbURhSld3ek9XMENKVUhXTjhFR1JYMnlzeU14U3pZNGZBUDFjd1oyRkFJQUFBPT0ifQ== -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MSwibmNvbCI6NH0sInJkZiI6Ikg0c0lBQUFBQUFBQUEyMVFYVS9FSUJEY1V2QThrcXFKdjZOTmpDKyttaGgvZ05Ia1h1bkgzUkVyTkVEVlgzKzZWRlk5Y2crRTJXRm5aNGVuaDgydDNFZ0FLSUVEZzFJZ0JQSHkvRmpmQVhDR1JZRVA2M2gvWXRNMUFvN242dDlENmVjQnIycWhBR0tMVEpqcUlrbFlrb2hKOWNPWUN1NW50ODNNaEZGdmcwOHFUbzJSSkZPMUkzaXUvWDBYOUR2VnE3MXRXeDNWUnlQWHpuNDBOTGI2Vy9EWXR4dVZKMThpWmErQ2FyWXV1Z01jTXNuS1RrRmJneUlXbzRwTVhMaU11SnhOM0tLdnUvMXNYdXViN0x1cUU1ai9XTEt2TkVxa1VXZUQyV2xEdWNXbzJ0OVB2Y0MwUzlobWN0b0VTb0tzYjRJTml2cGtaMGRpbG14dytBYVRGZVRURkFJQUFBPT0ifQ== -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["age"],"name":[2],"type":["int"],"align":["right"]},{"label":["isActive"],"name":[3],"type":["lgl"],"align":["right"]},{"label":["hobbies"],"name":[4],"type":["list"],"align":["right"]}],"data":[{"1":"sue","2":"19","3":"TRUE","4":"<chr [2]>","_rn_":"1"}],"options":{"columns":{"min":{},"max":[10],"total":[4]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
@@ -1855,7 +1884,10 @@ df</code></pre>
 <p>Or somebody 22 years old and active.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MSwibmNvbCI6NH0sInJkZiI6Ikg0c0lBQUFBQUFBQUEyMVFYVXNETVJEYzVoSnJBNmRDd1g5eEIrS0xyNEw0QTBTaHI3bVB0dEV6T1pLYyt1dXJtMnNXYmZCaDJkbEpaaWVUcDRmTnJkeElBQ2lBQTROQ0lBVHg4dnhZM1FGd2hzTUNEMWF4ZitHbE5RS09kZlhuZ0w4cTAyTXZadzdnR2tzbUhHdWRldFF3MHZqSmJSTVdvK3I2SVhNVFJyMzNQcWs0cVNLWmNLRjJCTSsxdjIrRC9xQjV1YmRObzZQNlpPWEsyYythMXBhL0R6ejFiUWZseVpkSTJhbWc2cTJMN2dDSFRMSzBZOURXb0lqRnFDSVRMMXhHWEU0bXZxS3IydjFrM3FxYjdMdktmekEvV3JMdnRFcWtWV2U5MldsRHVjV2dHdnpJNDNDQmFlZXc5ZWkwQ1pRRVdWOEhHeFRkazYwZGlKbXp3ZUVITGRCN2dCVUNBQUE9In0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSRmaW5kKCd7XCJhZ2VcIiA6IDIyLCBcImlzQWN0aXZlXCIgOiB0cnVlfScpXG5gYGAifQ== -->
+<pre class="r"><code>a$find(&#39;{&quot;age&quot; : 22, &quot;isActive&quot; : true}&#39;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MSwibmNvbCI6NH0sInJkZiI6Ikg0c0lBQUFBQUFBQUEyMVF5MDdETUJEY09qYWxsZ0pJbGZpTDVBQVhya2lJRDBBZzllbzgyaHFDSGRrTzhQV0ZkZW9WMU9LdzJ0bXhaOGZqcDRmTnJkeElBQ2lBQTROQ0lBVHg4dnhZM1FGd2hzTUNEMWF4ZitHbE5RS09kZlhuZ0w4cTAyTXZadzdnR2tzbUhHdWRldFF3MHZqSmJSTVdvK3I2SVhNVFJyMzNQcWs0cVNLWmNLRjJCTSsxdjIrRC9xQjV1YmRObzZQNlpPWEsyYythMXBhL0R6ejFiUWZseVpkSTJhbWc2cTJMN2dDSFRMSzBZOURXb0lqRnFDSVRMMXhHWEU0bXZxS3IydjFrM3FxYjdMdktmekEvV3JMdnRFcWtWV2U5MldsRHVjV2dHdnpJNDNDQmFlZXc5ZWkwQ1pRRVdWOEhHeFRkazYwZGlKbXp3ZUVIUzdhWkpSVUNBQUE9In0= -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["age"],"name":[2],"type":["int"],"align":["right"]},{"label":["isActive"],"name":[3],"type":["lgl"],"align":["right"]},{"label":["hobbies"],"name":[4],"type":["list"],"align":["right"]}],"data":[{"1":"jane","2":"22","3":"TRUE","4":"<chr [2]>","_rn_":"1"}],"options":{"columns":{"min":{},"max":[10],"total":[4]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
@@ -1864,14 +1896,19 @@ df</code></pre>
 <!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Great! And what if we would like to find adults ( age &gt; 18). That cannot be done using equalities… MongoDB has a concept called <a href="https://docs.mongodb.com/manual/reference/operator/">operators</a> for that.</p>
+<p>Great! And what if we would like to find adults ( age &gt; 18 ). That cannot be done using equalities… MongoDB has a concept called <a href="https://docs.mongodb.com/manual/reference/operator/">operators</a> for that.</p>
 <ul>
-<li>Comparison: $eq, $ne, $gt, $lte,…</li>
+<li>Comparison: $eq, $ne, $gt, $lte</li>
 <li>Logical: $and, $or, $not</li>
 <li>Element: $exists, $type</li>
 </ul>
-<p>This are the basic and most used ones but plenty can be found into their documentation.</p>
-<p>So for our previous question, $gt (grater-than) operator will need to be used.</p>
+<p>These are some of the basic but most used ones. Plenty can be found into their documentation.</p>
+<p>Their usage is often defined as:</p>
+<pre class="mongodb"><code>{ &lt;field&gt; : { &lt;operator&gt; : &lt;value&gt; } }</code></pre>
+<p>Or,</p>
+<pre class="mongodb"><code>{ &lt;operator&gt; : { &lt;field&gt; : &lt;value&gt; } }</code></pre>
+<p>It will depend on the operator definition itself.</p>
+<p>So for our previous question, <em>$gt</em> (grater-than) operator will need to be used.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSRmaW5kKCd7XCJhZ2VcIiA6IHtcIiRndFwiIDogMTh9fScpXG5gYGAifQ== -->
@@ -1892,7 +1929,7 @@ df</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSRmaW5kKCd7XCIkYW5kXCIgOiBbe1wiYWdlXCIgOiB7XCIkZ3RlXCIgOiAzMH19LHtcImlzQWN0aXZlXCIgOiB7XCIkZXFcIiA6IHRydWV9fSx7XCJob2JiaWVzXCIgOiB7IFwiJGV4aXN0c1wiIDogdHJ1ZX19XX0nKVxuYGBgIn0= -->
 <pre class="r"><code>a$find(&#39;{&quot;$and&quot; : [{&quot;age&quot; : {&quot;$gte&quot; : 30}},{&quot;isActive&quot; : {&quot;$eq&quot; : true}},{&quot;hobbies&quot; : { &quot;$exists&quot; : true}}]}&#39;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MiwibmNvbCI6NH0sInJkZiI6Ikg0c0lBQUFBQUFBQUExMVF5MDdETUJEY09EYWxrUUtWK2hlZzVJS1F1Q0loUGdDQjFLdmp1cW5WWUVlMkEzeDlZUjNzVW54WWVmWXh1ek4rZWRyY1Zac0tBRXFnUUtCa0NJRzl2VDQzRHdDVVlGSmdZeG5lTHh4YUk2QVlLd3dTRzJWbnVnalpLTDIwQ09xNUQzQ0RjWXRSeGJ5SXNZNzU2dXdBZFpQZFpiWEZYb21EMG4ybWhXbitMbDJjcFlrZmlra1Q3eE84Vk81UmVQVWhUeXROMTZuQS9yZHlhYzFubTliV1ozSkpmbHNNM0xsTVo3WGxucmM3R3hRQUhEUEt3b3hlR1kwa0VveXpqRnpZckhBOTZhQmsyNGo5cEEvTmZmekE5SG4xbjdJVHByOG55WGRjeGVLcUM2bDdwWk4zTnZCT0RqRzVRc2V6NFhhMFN2dmtCS3V1OWNiek5GY0pNNlRLN0EyT1AvR05OdTQzQWdBQSJ9 -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MiwibmNvbCI6NH0sInJkZiI6Ikg0c0lBQUFBQUFBQUExMVF5MDdETUJEY09EYWxrUUtWK2hlZzVBQVhya2lJRDBBZzllcTRibW8xMkpIdEFGOWZXQWU3RkI5V25uM003b3hmbmpiMzFhWUNnQklvRUNnWlFtQnZyOC9OQXdBbG1CVFlXSWIzQzRmV0NDakdDb1BFUnRtWkxrSTJTaTh0Z25ydUE5eGczR0pVTVM5aXJHTytPanRBM1dSM1dXMnhWK0tnZEo5cFlacS9TeGRuYWVLSFl0TEUrd1F2bFhzVVhuM0kwMHJUZFNxdy82MWNXdlBacHJYMW1WeVMzeFlEZHk3VFdXMjU1KzNPQmdVQXg0eXlNS05YUmlPSkJPTXNJeGMySzF4UE9palpObUkvNlVOekZ6OHdmVjc5cCt5RTZlOUo4aDFYc2JqcVF1cGU2ZVNkRGJ5VFEweXUwUEZzdUIydDBqNDV3YXBydmZFOHpWWENES2t5ZTRQakQxNWwzUjAzQWdBQSJ9 -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["age"],"name":[2],"type":["int"],"align":["right"]},{"label":["isActive"],"name":[3],"type":["lgl"],"align":["right"]},{"label":["hobbies"],"name":[4],"type":["list"],"align":["right"]}],"data":[{"1":"bob","2":"42","3":"TRUE","4":"<chr [1]>","_rn_":"1"},{"1":"peter","2":"43","3":"TRUE","4":"<chr [1]>","_rn_":"2"}],"options":{"columns":{"min":{},"max":[10],"total":[4]},"rows":{"min":[10],"max":[10],"total":[2]},"pages":{}}}
@@ -1901,23 +1938,24 @@ df</code></pre>
 <!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Great. If you see the whole document is returned from the database for every query. That makes sense when the whole document is required (as a key-value store) but what if we would like to only address part of the information? (Kind of like columnar stores)</p>
-<p>That’s what <em>projections</em> are for. Using projections, one can identify which part of the document is required. In mongolite, projection definition is called fields.</p>
+<p>Great. If you pay attention, the whole document is returned from the database for every query.</p>
+<p>That makes sense when the whole document is required (working like a key-value store) but what if we would like to only address part of the information? (Kind of like columnar stores)</p>
+<p>That’s what <em>projections</em> are for. Using projections, one can identify which part of the document is required. In mongolite, projection definition is called <strong>fields</strong>.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSRmaW5kKHF1ZXJ5ID0gJ3tcImlzQWN0aXZlXCIgOiB0cnVlfScsIGZpZWxkcyA9ICd7XCJuYW1lXCIgOiB0cnVlLCBcImFnZVwiIDogMX0nKVxuYGBgIn0= -->
 <pre class="r"><code>a$find(query = &#39;{&quot;isActive&quot; : true}&#39;, fields = &#39;{&quot;name&quot; : true, &quot;age&quot; : 1}&#39;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6NSwibmNvbCI6M30sInJkZiI6Ikg0c0lBQUFBQUFBQUE0VlFVVStETUJDK0FkV01aR3F5eFBqc293WUNNb1M5RzMrQTBXUnZwb1d5b2RnU0tORkhmL20wWmUyeTlJVW1sMzY5Nys2K2Z2Znl0RW44alE4QUxuamdnSXNrQlBUMitoemtBSjRqSHpOSnpOWDlJNHVXWXlYQWxhclN4RTFhclZha3lxS1lQaVJaU3RZMG9oa2h4YVBGeHpqTGszV2FWR1dSUkVXY3B4UDhWSDgyd2VmV1A5MStvQVlTVGpUMFBqQ2pSOHgzVEdQVVVrRTdDUmJqQ0FCbC9VN0d0WXhiR2ZmV2ZoRERYN1RYbXE0UmVxOUxNMXp4Sm8yMzFHcWZkL3c3TkNPVXB2TUw0MEcyVHRIZzN1aVlwRjlpZ2NPcVV4SUFlNnZsbkxlaTVrdzJPVXZ0NXJSNTFsbUp5NEdwbjVSQnNSdllaeEFyZ1pFK3hFTGY2QVM3QjBubnoxcjZHV1hiK3JoZzFHQkNHLzI0a0k1SHcySGIxVXdZSnpMYmg0SUxiT3I4Z2pjbU0zcUQvVC9xWUwxSXR3SUFBQT09In0= -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6NSwibmNvbCI6M30sInJkZiI6Ikg0c0lBQUFBQUFBQUE0VlFYVXZETUJTOWF4dGxoYWt3RUo5OVZGbzIyOGJ1WGZ3Qm9yQTNTZHAwcTlhazlBTjk5SmR2SmwweVpsNGF1T1Rrbm52dnlia3ZUK3ZJWC9zQTRJSUhEcmhJUWtCdnI4OUJDdUE1OGpHUnhGVGRQN0pvUGxRQ1hLa3FUZHdrUlp3VUpDM2lGY3ZqaDJXS0h6SEpzMFh4ajZjUlpUVEN0TUFyRWk5d2lyTm9oSTlIK0dTRXg5WS8zYlpuQmxKQk5mUStDR2RITExaY1kxU3pqalVTeklZUkFNcjZuWXhyR2JjeTdxMzlJRTYrV0tzMVhTUDBYdVptdU9KTm1teVkxVDV0eEhkb1JpaE41eGVHZzJ5ZHJDS3QwVEZKUHljZENZdEdTUURzckpaelVYZWw0TExKbVdzM3A4MlR4a3BjOWx6OUpBK3liYzgvZzZVU0dPaER6UFNOVHJCN2tIVDIxdExQR04rVXh3V2ppbEJXNmNlRmREd1lEdXVtNUoxeElyTnQySW1PbURvL0U1WEpETjVnOXdlYzMxeTZ0d0lBQUE9PSJ9 -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["_id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["age"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"5f44bf701e2375b9e0e7bbc6","2":"sue","3":"19","_rn_":"1"},{"1":"5f44bf71a783953fdc30c185","2":"bob","3":"42","_rn_":"2"},{"1":"5f44bf71a783953fdc30c186","2":"jane","3":"22","_rn_":"3"},{"1":"5f44bf71a783953fdc30c187","2":"john","3":"34","_rn_":"4"},{"1":"5f44bf71a783953fdc30c188","2":"peter","3":"43","_rn_":"5"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[5]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["_id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["age"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"5f45fa8f49ed4218676adc0f","2":"sue","3":"19","_rn_":"1"},{"1":"5f45fb3beb36bf69a40686c3","2":"bob","3":"42","_rn_":"2"},{"1":"5f45fb3beb36bf69a40686c4","2":"jane","3":"22","_rn_":"3"},{"1":"5f45fb3beb36bf69a40686c5","2":"john","3":"34","_rn_":"4"},{"1":"5f45fb3beb36bf69a40686c6","2":"peter","3":"43","_rn_":"5"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[5]},"pages":{}}}
   </script>
 </div>
 <!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Wait, what is that _id? That’s the index of the document. Every document inside a collection has a unique identifier so that even two documents with same properties will be identified by their _id. That’s actually the key in our key-value or column store key functionality.</p>
+<p>Wait, what is that *_id* field? That’s the index of the document. Every document inside a collection has a unique identifier so that even two documents with same properties will be identified by their *_id*. That’s actually the key in our key-value or column store-like functionality.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSRpbnNlcnQoJ3tcIm5hbWVcIiA6IFwicGV0ZXJcIiwgXCJhZ2VcIiA6IDUyfScpXG5gYGAifQ== -->
@@ -1947,16 +1985,16 @@ df</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSRmaW5kKHF1ZXJ5ID0gJ3t9JywgZmllbGRzID0gJ3tcIm5hbWVcIiA6IHRydWUsIFwiYWdlXCIgOiAxfScpXG5gYGAifQ== -->
 <pre class="r"><code>a$find(query = &#39;{}&#39;, fields = &#39;{&quot;name&quot; : true, &quot;age&quot; : 1}&#39;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6NywibmNvbCI6M30sInJkZiI6Ikg0c0lBQUFBQUFBQUE0VlNUVStEUUJDZFF0ZW1KSzBtWHZ3VEpkQmxTN25WUkQxNE5KcjBacFpsYVZIY2JZQkdqLzd5NmdLN1RkMkRKWm5NbTNuejVpUEwwOTBhZTJzUEFGd1lnZ011VWhEUXkvUERiQWt3ZEZRd1VNUzQ5VitxNkxxckJMaFNOdExFRGNtaktNM2pJT1J6SEpNMDRRR1AwNVF0TEQ2azhSSW5CT2Nad3dFTGwrUU1mMDRmbi9Jc3dVbVcwSWl3bkxCNXRPQ0U1S2Q4RnVMSTBwL2hrOEM2MDYzMzNNQlVwaG9PMzZqZ1J5eTNRbU8wNHcydi9na0FwbTN6RllidVc5MXJ2OUQrMXVTL2UvOElmN3oxT2tqUUQxN3JqVjJ6NW11Um1kVmEzcVRwaGx2eWNTVS9mZE5pb3N6cHA2cmpyVG1zcExXWlk1SmVSaHZxNTFVN0F1QmdTVVp5MXhSU0tKSFQvajdJRWc4cUszRzVGKzBtMll4dDkrSjlGcllET3JxM2lmYWpFK3oySTUwZjNRcnBWaGRjYklyajg2Q1NwcnpVd1ZSZDNCM3M3NnBDTk9ZU2xhMzlSamJVMUhsTWxpYlQzUWFIWHp4TE42NDFBd0FBIn0= -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6NywibmNvbCI6M30sInJkZiI6Ikg0c0lBQUFBQUFBQUE0VlJVVStETUJDK0FaV01aR3BpWW56MlVUUENoRlgyYnZ3QlJwTzltUmJLaG1LN0FJcysrc3MzVzJpWHJROUM4cVhmM1hkM1g0KytQQzNqWUJrQWdBc2VPT0FpU1FHOXZUNVBVd0RQa2NGSUNtTjEvc2lpcTY0UzRGTEMxOExOdkVqbUJVbUxaTUh5NUdHVzRrZE04aXdxVG5RYVUwWmpUQXU4SUVtRVU1ekZBM295b004SGRIeWs0MmlXMi9waVFDZldubTZ6WllaU1FUWDFQZ2huQnk3V1hITzBZUzJyL3drQUp0MXdBUFZUN3lTdUpXNGw3aVdTSGljdmdEajVZbzIrbFd1dThsN214bDdwSmsxV3pHb2YxK0k3TkNPVXQvTUwzZWZiUGxsRkd1Tmpra0ZPV2hJV3RiSUEyRmt0dnRpMHBlQ3l5VkhiSUt0NVZGdUppeTFYTjhtbjJYckxQNmV4TXVqa0hoTjkra2ZjN1MyZHZSNkY5S2d6eGxmbDRRbFFSU2lyZEhBdU4rNFdEamQxeVZ1emljdzJZU3RhWXVxQ1RGUW0wKzBHdXovL1FsallHUU1BQUE9PSJ9 -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["_id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["age"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"5f44bf701e2375b9e0e7bbc6","2":"sue","3":"19","_rn_":"1"},{"1":"5f44bf71a783953fdc30c185","2":"bob","3":"42","_rn_":"2"},{"1":"5f44bf71a783953fdc30c186","2":"jane","3":"22","_rn_":"3"},{"1":"5f44bf71a783953fdc30c187","2":"john","3":"34","_rn_":"4"},{"1":"5f44c939d9a45cf5c246e55f","2":"peter","3":"43","_rn_":"5"},{"1":"5f44d134a783953fdc30c18f","2":"peter","3":"52","_rn_":"6"},{"1":"5f44d134a783953fdc30c190","2":"peter","3":"52","_rn_":"7"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[7]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["_id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["age"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"5f45fa8f49ed4218676adc0f","2":"sue","3":"19","_rn_":"1"},{"1":"5f45fb3beb36bf69a40686c3","2":"bob","3":"42","_rn_":"2"},{"1":"5f45fb3beb36bf69a40686c4","2":"jane","3":"22","_rn_":"3"},{"1":"5f45fb3beb36bf69a40686c5","2":"john","3":"34","_rn_":"4"},{"1":"5f45fb3beb36bf69a40686c6","2":"peter","3":"43","_rn_":"5"},{"1":"5f4601dbeb36bf69a40686c9","2":"peter","3":"52","_rn_":"6"},{"1":"5f4601dbeb36bf69a40686ca","2":"peter","3":"52","_rn_":"7"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[7]},"pages":{}}}
   </script>
 </div>
 <!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Only, the _id can separate the two peters we just inserted. We can also provide our own _id but we will need to make sure it is unique for a given document.</p>
+<p>Only, the *_id* can separate the two “peter”s we just inserted. We can also provide our own *_id* but we will need to make sure it is unique for a given collection</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSRpbnNlcnQoJ3tcIl9pZFwiIDogMSwgXCJuYW1lXCIgOiBcInBldGVyXCIsIFwiYWdlXCIgOiA1Mn0nKVxuYGBgIn0= -->
@@ -1984,25 +2022,25 @@ df</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSRmaW5kKHF1ZXJ5ID0gJ3t9JywgZmllbGRzID0gJ3tcIm5hbWVcIiA6IHRydWUsIFwiYWdlXCIgOiAxfScpXG5gYGAifQ== -->
 <pre class="r"><code>a$find(query = &#39;{}&#39;, fields = &#39;{&quot;name&quot; : true, &quot;age&quot; : 1}&#39;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6OCwibmNvbCI6M30sInJkZiI6Ikg0c0lBQUFBQUFBQUE0MVNYVStETUJTOUE2b2J5YWFKTC82SmtiSFNNZDQwVVI5OE5KcnN6WlJTTmhUTEFpejY2QytmdHRBdVMyTXlTVzd1eDdubjNwNldwN3NWOWxjK0FMamdnUU11a2lHZ2wrZUg2UkxBYzJReWtNQkkrUy9aZE5WMUFseEtHMnJnbXVSUmxPYnhMT1J6SEpNMDRUTWVweWxiV0hoSTR5Vk9DTTR6aG1jc1hKSVQrQ2wrZkl5ekJDZFpRaVBDY3NMbTBZSVRrbHQ0WnZHekV6ZzN3a05Mc052c0RPYW1WYXBENzQwS2ZvaXJqZEF4MnZLVzEvOU5BQ1pxMHcyRzdydTUxMzZoL2EycGYvZitFZjcwMXRzaFFUOTRvMlc0NXV5dmhia0NUK0dtVE5mY29vL3E2ak13SThiU25INjd2QkZyRHl0cFkvYVlvcC9SbGdaNXJWWUE3QzNLZWJWdGkwcElrcU4rTG1TUkI3VlZ1TmdKZFpKc3lqWTc4VDVWYitOM2NHOWo3WWRIc2R1dmRINzBLS1JIblhHeExnNXZoa3FhOGxJbkU2bTRFeHhzNjBLMFJvbXNOa0ZidGRUMCthd3FUYVhUQnZ0ZmIyZUtXRk1EQUFBPSJ9 -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6OCwibmNvbCI6M30sInJkZiI6Ikg0c0lBQUFBQUFBQUE0MVJ5MDdETUJEY0pqVzBrUXBJU0lnelIxQ2lORW5kOUk3NEFBUlNiOGhPbkRZUTdDb1B3WkV2TDlpcFhhZ3ZKZExJNjUzZG5aMzQ4WDRaZTBzUEFGd1lnZ011a2lHZzU2Y0hQd1VZT3ZJeWtNUlluWit5NkxLdkJMaVFHR25pZWxZa3M0S2tSYkpnZVJKTlV6ekhKTS9DNG9Dbk1XVTB4clRBQzVLRU9NVlpmSVJQanZDekl6dys0RmtZV2Z6YzRtT0xUNDN4cVdYWWJUcG1RaXFvRG9ldmhMTjlMTlpjeDJqRFdsYi85d0l3NlpVQTFLKytsYmlTdUpHNGswaCtjZkEyaUpOMzF1ZzFYYlBiUzVtYmZSUnYwbVRGclBaeExUNENNMExwTzEvUWZ5TmJKNnRJWTNSTTBzdEpTNEtpVmhJQVc2dmxWR3phVW5EWjVDaEh5R29lMUZiaXZPTnFrOXpQMWgxLzh5TWwwTk03VFBRNStoTzdPMG5uVzQ5Q2V0UUo0NnR5L3lhb0lwUlYrbkltSGZlR2cwMWQ4dFk0a2RrbWFFVkxUSjJYaWNwa2VtK3cvUUZmc1BnTk13TUFBQT09In0= -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["_id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["age"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"5f44bf701e2375b9e0e7bbc6","2":"sue","3":"19","_rn_":"1"},{"1":"5f44bf71a783953fdc30c185","2":"bob","3":"42","_rn_":"2"},{"1":"5f44bf71a783953fdc30c186","2":"jane","3":"22","_rn_":"3"},{"1":"5f44bf71a783953fdc30c187","2":"john","3":"34","_rn_":"4"},{"1":"5f44c939d9a45cf5c246e55f","2":"peter","3":"43","_rn_":"5"},{"1":"5f44c93da783953fdc30c18d","2":"peter","3":"52","_rn_":"6"},{"1":"5f44c93da783953fdc30c18e","2":"peter","3":"52","_rn_":"7"},{"1":"1","2":"peter","3":"52","_rn_":"8"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[8]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["_id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["age"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"5f45fa8f49ed4218676adc0f","2":"sue","3":"19","_rn_":"1"},{"1":"5f45fb3beb36bf69a40686c3","2":"bob","3":"42","_rn_":"2"},{"1":"5f45fb3beb36bf69a40686c4","2":"jane","3":"22","_rn_":"3"},{"1":"5f45fb3beb36bf69a40686c5","2":"john","3":"34","_rn_":"4"},{"1":"5f45fb3beb36bf69a40686c6","2":"peter","3":"43","_rn_":"5"},{"1":"5f45fe02eb36bf69a40686c7","2":"peter","3":"52","_rn_":"6"},{"1":"5f45fe03eb36bf69a40686c8","2":"peter","3":"52","_rn_":"7"},{"1":"1","2":"peter","3":"52","_rn_":"8"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[8]},"pages":{}}}
   </script>
 </div>
 <!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>We can set _id projection to false and that way the field we initially wanted will be the only ones showing.</p>
+<p>We can set *_id* projection to false (false and zero are equally considered) and that way the fields we initially wanted will be the only ones showing.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSRmaW5kKHF1ZXJ5ID0gJ3t9JywgZmllbGRzID0gJ3tcIm5hbWVcIiA6IHRydWUsIFwiYWdlXCIgOiAxLCBcIl9pZFwiIDogZmFsc2V9JylcbmBgYCJ9 -->
 <pre class="r"><code>a$find(query = &#39;{}&#39;, fields = &#39;{&quot;name&quot; : true, &quot;age&quot; : 1, &quot;_id&quot; : false}&#39;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6OCwibmNvbCI6Mn0sInJkZiI6Ikg0c0lBQUFBQUFBQUE0MVIwVXJETUJTOVN4dTNGVFlGdjZNRkdZaVBFOVFISDBWaHIybVhiZFdhbERSRkgvM3k2VTE3NzVEZ2c0Vnd6ajNKdVRjbmZicmJyTEpOQmdBSnBDQWdrVWhCdmp3LzVEY0FxY0JpZ2h2emdKOTQ2QkpKRUM5d3pXZ2o2WHJOdExRbDBmUlZHWDNpOW1DSXkxWjc3ZjViQUN6RHBQVUtobTk5VDNoTmVNdjYxNGlQOENkR1VhUlI3N3FqR0lJdkdVVE9vZlk2OHN5ZC9Tall0d2krY1NRK1E5UzhhbFRIelZuTXRzcXJZdWZDQ0lCalpKbmExdGZXb0VtRUI1YVJlZUlpNGJ3MzRTYmJ2RHIwNWkyL0NnT0c3WEV0Q0dlL3VCaEhpbTlxSmFuVm1UYjcrdlNqWktOSzNWQ3h4TVJENEtKMXRmR2NCTld1OE5ZclBwZFZ0bUZseUFiSEgwd2dxd0pYQWdBQSJ9 -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6OCwibmNvbCI6Mn0sInJkZiI6Ikg0c0lBQUFBQUFBQUE0MVJ3VTdETUF6MTBnYTZTZ01rSkQ2QUk2aTlqQU1mZ1BnQUJOS3VhUmUyUWttcU5CVWMrZktCbmNVRGNpTFNVNTZmWXo5YmViaGJMY3RWQ1FBWjVDQWdrMGhCUGozZVY3Y0F1Y0JnaG9rNTNSLzQ2QndKaVdlSUlpYXljZEpNRzl0RW1yOG9vdy9jYmsza2N0QmV1LzhHQUl2Z0JFRE9WNGdMeENYaUduSHpneitqU3FQZTlCakhGRHdFaVR5bjJ1aWtadTdzZTgxMVpDbytJWndpYmQ3MmF1VG1MSlpyNVZYOTdNZ0NZSmVVSE52QmQ5WmdrYUExWkZJOGM0bHdPaG1hWkYyMTI4bThWa3N5Q09rOUZ2RXVmbkd4dHhSZnNaV01yWTYwMlhTSGo1QzlhblFmZ3hQY09DeGNENjR6bmpkQmRheTk5WXJmbGEzdFdRbTd3ZTRiTG9jdUx6Y0NBQUE9In0= -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["age"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"sue","2":"19","_rn_":"1"},{"1":"bob","2":"42","_rn_":"2"},{"1":"jane","2":"22","_rn_":"3"},{"1":"john","2":"34","_rn_":"4"},{"1":"peter","2":"43","_rn_":"5"},{"1":"peter","2":"52","_rn_":"6"},{"1":"peter","2":"52","_rn_":"7"},{"1":"peter","2":"52","_rn_":"8"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[8]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["age"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"sue","2":"19","_rn_":"1"},{"1":"bob","2":"42","_rn_":"2"},{"1":"jane","2":"22","_rn_":"3"},{"1":"john","2":"34","_rn_":"4"},{"1":"peter","2":"43","_rn_":"5"},{"1":"peter","2":"52","_rn_":"6"},{"1":"peter","2":"52","_rn_":"7"},{"1":"peter","2":"52","_rn_":"8"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[8]},"pages":{}}}
   </script>
 </div>
 <!-- rnb-frame-end -->
@@ -2010,7 +2048,8 @@ df</code></pre>
 <!-- rnb-text-begin -->
 <div id="arrays" class="section level3">
 <h3>Arrays</h3>
-<p>With arrays some interesting things happen. For example, what happens if we ask an array field to match a string it contains?</p>
+<p>Arrays and nested documents are kind of especial constructs that require some attention. Actually, MongoDB can show some unexpected behavior in those cases.</p>
+<p>For example, what happens if we ask an array field to match a string?</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSRmaW5kKHF1ZXJ5ID0gJ3tcImhvYmJpZXNcIiA6IFwicGFkZWxcIn0nKVxuYGBgIn0= -->
@@ -2025,13 +2064,14 @@ df</code></pre>
 <!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>It looks for the existence inside the array itself. If you would like to ask for the one that holds the string in a certain position, you will need to reference that position using dot notation (0 padded).</p>
+<p>It looks for the existence inside the array itself. MondoDB instead of evaluating the equality searches inside the array.</p>
+<p>If you would like to ask for the one that holds the string in a certain position, you will need to reference that position using dot notation (0 padded).</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSRmaW5kKHF1ZXJ5ID0gJ3tcImhvYmJpZXMuMVwiIDogXCJwYWRlbFwifScpXG5gYGAifQ== -->
 <pre class="r"><code>a$find(query = &#39;{&quot;hobbies.1&quot; : &quot;padel&quot;}&#39;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MSwibmNvbCI6NH0sInJkZiI6Ikg0c0lBQUFBQUFBQUEyMVF5MDdETUJEY09qYWxsZ0pJbGZpTDVBQVhya2lJRDBBZzllbzgyaHFDSGRrTzhQV0ZkZW9WMU9LdzJ0bXhaOGZqcDRmTnJkeElBQ2lBQTROQ0lBVHg4dnhZM1FGd2hzTUNEMWF4ZitHbE5RS09kZlhuZ0w4cTAyTXZadzdnR2tzbUhHdWRldFF3MHZqSmJSTVdvK3I2SVhNVFJyMzNQcWs0cVNLWmNLRjJCTSsxdjIrRC9xQjV1YmRObzZQNlpPWEsyYythMXBhL0R6ejFiUWZseVpkSTJhbWc2cTJMN2dDSFRMSzBZOURXb0lqRnFDSVRMMXhHWEU0bXZxS3IydjFrM3FxYjdMdktmekEvV3JMdnRFcWtWV2U5MldsRHVjV2dHdnpJNDNDQmFlZXc5ZWkwQ1pRRVdWOEhHeFRkazYwZGlKbXp3ZUVIUzdhWkpSVUNBQUE9In0= -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MSwibmNvbCI6NH0sInJkZiI6Ikg0c0lBQUFBQUFBQUEyMVFYVXNETVJEYzVoSnJBNmRDd1g5eEIrS0xyNEw0QTBTaHI3bVB0dEV6T1pLYyt1dXJtMnNXYmZCaDJkbEpaaWVUcDRmTnJkeElBQ2lBQTROQ0lBVHg4dnhZM1FGd2hzTUNEMWF4ZitHbE5RS09kZlhuZ0w4cTAyTXZadzdnR2tzbUhHdWRldFF3MHZqSmJSTVdvK3I2SVhNVFJyMzNQcWs0cVNLWmNLRjJCTSsxdjIrRC9xQjV1YmRObzZQNlpPWEsyYythMXBhL0R6ejFiUWZseVpkSTJhbWc2cTJMN2dDSFRMSzBZOURXb0lqRnFDSVRMMXhHWEU0bXZxS3IydjFrM3FxYjdMdktmekEvV3JMdnRFcWtWV2U5MldsRHVjV2dHdnpJNDNDQmFlZXc5ZWkwQ1pRRVdWOEhHeFRkazYwZGlKbXp3ZUVITGRCN2dCVUNBQUE9In0= -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["age"],"name":[2],"type":["int"],"align":["right"]},{"label":["isActive"],"name":[3],"type":["lgl"],"align":["right"]},{"label":["hobbies"],"name":[4],"type":["list"],"align":["right"]}],"data":[{"1":"jane","2":"22","3":"TRUE","4":"<chr [2]>","_rn_":"1"}],"options":{"columns":{"min":{},"max":[10],"total":[4]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
@@ -2040,12 +2080,13 @@ df</code></pre>
 <!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>That dot notation is used not only with arrays but also with fields containing nested JSON structures. Some interesting array operators can be found in the <a href="https://docs.mongodb.com/manual/reference/operator/query-array/">documentation</a>.</p>
+<p>That dot notation is used the same way with fields contained inside nested JSON structures. Some interesting array operators can be found in the <a href="https://docs.mongodb.com/manual/reference/operator/query-array/">documentation</a>.</p>
 </div>
 </div>
 <div id="update" class="section level2">
 <h2>Update</h2>
-<p>Of course, some documents will need to be updated. For that, documents will need to be identified and then some operators used to update those. For example let’s update our 52 year old “peter”s.</p>
+<p>Of course, some documents inside our collection will need to be updated. For that, documents will need to be identified and then some operators used to update those.</p>
+<p>For example let’s update our 52 year old “peter”s using the <em>$set</em> operator that allows us to set a new key-value pair inside identified documents.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSR1cGRhdGUoJ3tcIm5hbWVcIiA6IFwicGV0ZXJcIiwgXCJhZ2VcIiA6IDUyfScsICd7XCIkc2V0XCI6IHtcImhvYmJpZXNcIiA6IDV9fScpXG5gYGAifQ== -->
@@ -2059,22 +2100,22 @@ df</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Ok, but it says matchedCount 1… which one?</p>
+<p>Ok, but it says matchedCount 1, we had like three “peter”s that match that description… which one is it then?</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSRmaW5kKCd7XCJuYW1lXCIgOiBcInBldGVyXCJ9JylcbmBgYCJ9 -->
 <pre class="r"><code>a$find(&#39;{&quot;name&quot; : &quot;peter&quot;}&#39;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6NCwibmNvbCI6NH0sInJkZiI6Ikg0c0lBQUFBQUFBQUE0MVJQVS9ETUJDOUpEWnRMVkdRK2p1U3BReU1SUUlHUmdSU1Y4YzFxZFZnUjdZTGpQeHk0SnphVlJNWXNIUzZEOS9kZTg5K3ZGMHYyWm9CUUFFRWNpZ29oa0Nmbis3TGF3Q1NZNUxoeFN6NEQyeGFZRURRTG50L3VLQ2Q5TkwrTndHWWg5blYzV2RBZ3RVRC9PbnhzSWlWaGM1a2VFNDVKSEtUclJJN3BSc016L3N5NHFGOUhXeWdnMnIrS3QxSUF3bkZHQmU4U2VGVXVSdmgxWnM4d3BpNlZtRjZzSEptelh1VjFnYjhQRklsWTJ6UmN1ZEczTm1HZTE2OTJNRGdOOTJKNmJ3eUdvZnlSVlIxT3B6WlVlRmlyd09UVFNtMmU3MHJyK0pEWnRIUzY1QmhIQ0R6NzdpS3hsVm5VamRLSisyMDViVnNZekpIeGIzZ3FyTksrNlFFcTY3eXh2UFV4NFJwVXlWK3h3OFlpaFBzY3dJQUFBPT0ifQ== -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6NCwibmNvbCI6NH0sInJkZiI6Ikg0c0lBQUFBQUFBQUE0MVJ5MDdETUJEY0pEYWxrWGhJL1F5VVNCVWN1Q0loUGdDQjFLdmptdFJxYWtlMkN4ejVjbURkcmxHU1hvZzA4ZTdhT3p0alB6K3Vic3RWQ1FBRk1NaWg0QmdDZjMxNXF1NEJXSTVKaGh2enVIN2lvUVVHREhGOVdJOGJ2RmRCdWY4bUFCZkVjWU80RzZDa2V2YUZ2d1Q4aGpPVG1ObEd5NjAyTGRGbGtSL3hmY1JJTnpkaXAveEVNNHRGaWd2UnB2QmMrd2NaOUx2NkcyT2JSc2Z1RWVYYzJZODYwY2I1T1VsbDA5bXlFOTVQdEpkckVVVDk1cUtDVTdrejJ3ZHREVGJsQzNJMWJNN2NwSEMxTjFISnVwS2J2ZGxXUzdySWpKQnVoNDNqT0RML0lTcE9WR2ZLdE5vazc3d1RqZW9vdVVUSEI4TjE3N1FKeVFsV2ZSMXNFT2xjS1cyWEt2UWN2NmxKNGsxakFnQUEifQ== -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["age"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["isActive"],"name":[3],"type":["lgl"],"align":["right"]},{"label":["hobbies"],"name":[4],"type":["list"],"align":["right"]}],"data":[{"1":"peter","2":"43","3":"TRUE","4":"<chr [1]>","_rn_":"1"},{"1":"peter","2":"52","3":"NA","4":"<int [1]>","_rn_":"2"},{"1":"peter","2":"52","3":"NA","4":"<NULL>","_rn_":"3"},{"1":"peter","2":"52","3":"NA","4":"<NULL>","_rn_":"4"}],"options":{"columns":{"min":{},"max":[10],"total":[4]},"rows":{"min":[10],"max":[10],"total":[4]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["age"],"name":[2],"type":["int"],"align":["right"]},{"label":["isActive"],"name":[3],"type":["lgl"],"align":["right"]},{"label":["hobbies"],"name":[4],"type":["list"],"align":["right"]}],"data":[{"1":"peter","2":"43","3":"TRUE","4":"<chr [1]>","_rn_":"1"},{"1":"peter","2":"52","3":"NA","4":"<int [1]>","_rn_":"2"},{"1":"peter","2":"52","3":"NA","4":"<NULL>","_rn_":"3"},{"1":"peter","2":"52","3":"NA","4":"<NULL>","_rn_":"4"}],"options":{"columns":{"min":{},"max":[10],"total":[4]},"rows":{"min":[10],"max":[10],"total":[4]},"pages":{}}}
   </script>
 </div>
 <!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Ok, that one. Wait, but why did it only update one of them? Well, MongoDB works like that. The first one that matches is updated. If all need to be updated, it needs to be said.</p>
+<p>Ok, that one! Wait, but why did it only update one of them? Well, MongoDB works like that. The first one that matches is updated. If all need to be updated, it needs to be said.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSR1cGRhdGUoJ3tcIm5hbWVcIiA6IFwicGV0ZXJcIiwgXCJhZ2VcIiA6IDUyfScsICd7XCIkc2V0XCI6IHtcImhvYmJpZXNcIiA6IDV9fScsIG11bHRpcGxlID0gVFJVRSlcbmBgYCJ9 -->
@@ -2089,16 +2130,16 @@ df</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSRmaW5kKCd7XCJuYW1lXCIgOiBcInBldGVyXCJ9JylcbmBgYCJ9 -->
 <pre class="r"><code>a$find(&#39;{&quot;name&quot; : &quot;peter&quot;}&#39;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6NCwibmNvbCI6NH0sInJkZiI6Ikg0c0lBQUFBQUFBQUE0MVF3VTdETUF4MTA0UnRsUmhJKzQ3Mk1pRnhIQkp3NEloQTJqWHRRaGV0SkZXYUFVZStmT0NVZUZvcmtJaGs1Zm5GOXZQTDQrMTZtYTB6QUVpQkE0TlVJQVR4L0hTZlh3Tndoa21DRDdOd2YyRFJBZ0hIdU96dm53ZlJLcS9jZnhPQWVlaGQzWDBHSlZnOXdLODNuaXhxSmFHU0FzL3BEclRjWkt1cm5UWTF3dk9lUnIyLzhjQ1hNUEpWZFNOUFBKQVJwN0ltT05YZFRlWDFtenJLMnJMVW9Yc3djdWJzZTBGamd5NkxxL094ZHRYSWpyU0p6RGJTeStMRmhRMEFEcU9XaVcyOXRnYWIyQ0k2TzIxTzNJaTQySnV3eVNhdnRudXp5Ni9peHlZeDZGZjRFQWRKOWhWSGlUanFUSmxhRy9JdUdsbXFKaVp6ZE53YkxscW5qU2NueUhhRnQxNVNYVmJaaHBqZUd4eStBU2Z3aGMrREFnQUEifQ== -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6NCwibmNvbCI6NH0sInJkZiI6Ikg0c0lBQUFBQUFBQUE0MVFYVXZFTUJEY3Rvbm5GZnlBK3huU3ZpamlxeUQrQUZHNDF6UVhlK0ZxVXRxYyt1Z3ZQOTNVWFdrTEJ4YTJtVXl5TXp0NWVsaGY1K3NjQURJUWtFSW1FWUo4ZVg0czdnQkVpcHNFRDVaeC9jUkxLd1FDNjNKWWZ3OWthNExwL3JzQk9DT05LNnliVWVYRUoxLzQ0OEp2N01uRExMWlc3NnlyU1M2SitzZnhKSWQwNnMzMHN3d2lrb1F6VlRNOHRmMjlEdmJkL05uNnFyS3hleUs1N1B4SHliTFJONlhSeGR4Yk42cG5ieWJ6alFxcWZPM2lCQUNIV2N2Q3Q4RjZoMDNwaXBLTm01TnVSbHpzWFp4a1UranQzdTJLVzNyWWhJcGZSVXh4dEV5L1NVcVMxSWx4dFhXY1hUYXFNZzF0empIeEVMaHNPK3NDSjBHMkw0TVBpdS9sMmpmTURObmc4QU9nVnpvaWN3SUFBQT09In0= -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["age"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["isActive"],"name":[3],"type":["lgl"],"align":["right"]},{"label":["hobbies"],"name":[4],"type":["list"],"align":["right"]}],"data":[{"1":"peter","2":"43","3":"TRUE","4":"<chr [1]>","_rn_":"1"},{"1":"peter","2":"52","3":"NA","4":"<int [1]>","_rn_":"2"},{"1":"peter","2":"52","3":"NA","4":"<int [1]>","_rn_":"3"},{"1":"peter","2":"52","3":"NA","4":"<int [1]>","_rn_":"4"}],"options":{"columns":{"min":{},"max":[10],"total":[4]},"rows":{"min":[10],"max":[10],"total":[4]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["age"],"name":[2],"type":["int"],"align":["right"]},{"label":["isActive"],"name":[3],"type":["lgl"],"align":["right"]},{"label":["hobbies"],"name":[4],"type":["list"],"align":["right"]}],"data":[{"1":"peter","2":"43","3":"TRUE","4":"<chr [1]>","_rn_":"1"},{"1":"peter","2":"52","3":"NA","4":"<int [1]>","_rn_":"2"},{"1":"peter","2":"52","3":"NA","4":"<int [1]>","_rn_":"3"},{"1":"peter","2":"52","3":"NA","4":"<int [1]>","_rn_":"4"}],"options":{"columns":{"min":{},"max":[10],"total":[4]},"rows":{"min":[10],"max":[10],"total":[4]},"pages":{}}}
   </script>
 </div>
 <!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>There also exist operators to rename a field.</p>
+<p>There also exists an operator to <em>$rename</em> a field.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSR1cGRhdGUoJ3tcIm5hbWVcIiA6IFwicGV0ZXJcIiwgXCJhZ2VcIiA6IDUyfScsICd7XCIkcmVuYW1lXCI6IHtcImFnZVwiIDogXCJ5ZWFyc29sZFwifX0nKVxuYGBgIn0= -->
@@ -2112,7 +2153,7 @@ df</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Or increment a value inside a field.</p>
+<p>Or to increment a value inside a field, <em>$inc</em>.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSR1cGRhdGUoJ3tcIm5hbWVcIiA6IFwicGV0ZXJcIiwgXCJhZ2VcIiA6IDUyfScsICd7XCIkaW5jXCI6IHtcInllYXJzb2xkXCIgOiAxLjJ9fScpXG5gYGAifQ== -->
@@ -2125,30 +2166,34 @@ df</code></pre>
  $ upsertedCount: int 0</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSRmaW5kKCd7XCJuYW1lXCIgOiBcInBldGVyXCJ9JylcbmBgYCJ9 -->
 <pre class="r"><code>a$find(&#39;{&quot;name&quot; : &quot;peter&quot;}&#39;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6NCwibmNvbCI6NX0sInJkZiI6Ikg0c0lBQUFBQUFBQUE0MVNUVS9ETUF6MTJvU3hTb3hKK3gzclpSZHVEQWs0Y0VRZzdacTJvWXRXa3FyTitEakJiK0VYSW5FZjJGa3lqVWhJUkhKalA5dDZ6MDV2TDVmemJKa0JRQW9NRWtnNXVzRHY3NjVuWndBc3dXQ0FpUkhkTDFnMHBTemFCSTM1QkcrbGxkMS9BNEF4OVM2dTNva0ozajdwTy94WTNMZ1F3bzBuY3h4SVRKWEI4RXc5UGprUU4xeXBjcTEwamU2SmczY3kvL0tkaEpqNi9HdnVUc0NqK2JrV2o3TDN2TnlEakVEdnA2SU83ckhxTDBxcm51UmVuaWtLaGQwKy9TcEYxNXVtaWloR25Ybk9BdzNwVGZ6SUxOWlNOcUlQV2dLWVZjS0svS0VqUlFEYnFHVm9XcXVNeHFiazhCSDNyOXRGd09sR2s1SnFWcTQyZWsxL2czdVFnYmV3VGZaN3MwU1pmRWRMT3BLNlZqcnNnamVpa0kwUHhqaXhHemh2TzZWdG1BVFJQcmZHaWxDWGxhWUppSnNOdGo4NkZJTU51d0lBQUE9PSJ9 -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6NCwibmNvbCI6NX0sInJkZiI6Ikg0c0lBQUFBQUFBQUE0MVJ6VTdETUF4MjI0U3lTb3hKZXd6VVhzWUJUb0NFT0hCRUlPMmF0cUdMVnBJcXpmZzV3YlB3aEVqY0IwbHhwaTNTSkN4WnNUL0g5bWY3N25vK3krWVpBQ1JBSUlhRVdoUG93LzFOZmdaQVl1dEVOakJ5NzZ2OU5IVlJxeE9yQkFPMDQ0YnIvem9BUjBNdXdNa0hESEtLbWlFZU9keXJsU25pa3kweTZVSlVTeUViTEJjaHJYMzIySlY0LzNMVjBzL0wyNys2RjkrelFUd2V6RXNsZStJOTlxVUlFZ2VpbmJER200ZWl2NnFNZU9ZYmVxb3NoYzNHOEJ0bnVsZHRIYlFZYWZWUytEYU9iNHdqazVCTDFiTGVjL0ZnVmpQRGlrZnRHQUdzZzVSVWRVWW9hWlBpN2FOdHJxa0Q0SGdsSFpNNnJ4WXJ1Y3pQOFNBUnF0OG0yZDJzYXhuL0JFczY0TElSMHUrQ3RxemtMVHBqTy9Fd2NORnBJWTJmeEtKOVlaUmgvbDlXcWRZancyeXcvZ1h0dGlwT3F3SUFBQT09In0= -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["age"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["isActive"],"name":[3],"type":["lgl"],"align":["right"]},{"label":["hobbies"],"name":[4],"type":["list"],"align":["right"]},{"label":["yearsold"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"peter","2":"43","3":"TRUE","4":"<chr [1]>","5":"NA","_rn_":"1"},{"1":"peter","2":"NA","3":"NA","4":"<int [1]>","5":"52.0","_rn_":"2"},{"1":"peter","2":"52","3":"NA","4":"<int [1]>","5":"1.2","_rn_":"3"},{"1":"peter","2":"52","3":"NA","4":"<int [1]>","5":"NA","_rn_":"4"}],"options":{"columns":{"min":{},"max":[10],"total":[5]},"rows":{"min":[10],"max":[10],"total":[4]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["age"],"name":[2],"type":["int"],"align":["right"]},{"label":["isActive"],"name":[3],"type":["lgl"],"align":["right"]},{"label":["hobbies"],"name":[4],"type":["list"],"align":["right"]},{"label":["yearsold"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"peter","2":"43","3":"TRUE","4":"<chr [1]>","5":"NA","_rn_":"1"},{"1":"peter","2":"NA","3":"NA","4":"<int [1]>","5":"52.0","_rn_":"2"},{"1":"peter","2":"52","3":"NA","4":"<int [1]>","5":"1.2","_rn_":"3"},{"1":"peter","2":"52","3":"NA","4":"<int [1]>","5":"NA","_rn_":"4"}],"options":{"columns":{"min":{},"max":[10],"total":[5]},"rows":{"min":[10],"max":[10],"total":[4]},"pages":{}}}
   </script>
 </div>
 <!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Some things happened there. We incremented a field that doesn’t exists in a given document and forces the rest of the documents that contain that field to be reinterpreted as such.</p>
-<p>That’s odd but MongoDB is like that…</p>
+<p>Some things happened there. We did increment a field that doesn’t exists in a given document and that forces the rest of the documents that contain the field to be reinterpreted to the same type when queried.</p>
+<p>That’s odd but MongoDB is a weird fella…</p>
+<div id="arrays-1" class="section level3">
+<h3>Arrays</h3>
 <p>There are some additional operators for array updates as well.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSR1cGRhdGUoJ3tcIm5hbWVcIiA6IFwicGV0ZXJcIiwgXCJhZ2VcIiA6IDUyfScsICd7XCIkc2V0XCI6IHtcImhvYmJpZXNcIiA6IFtcIm1vbmdvZGJcIl19fScsIG11bHRpcGxlID0gVFJVRSlcbmBgYCJ9 -->
 <pre class="r"><code>a$update(&#39;{&quot;name&quot; : &quot;peter&quot;, &quot;age&quot; : 52}&#39;, &#39;{&quot;$set&quot;: {&quot;hobbies&quot; : [&quot;mongodb&quot;]}}&#39;, multiple = TRUE)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiTGlzdCBvZiAzXG4gJCBtb2RpZmllZENvdW50OiBpbnQgMFxuICQgbWF0Y2hlZENvdW50IDogaW50IDJcbiAkIHVwc2VydGVkQ291bnQ6IGludCAwXG4ifQ== -->
+<!-- rnb-output-begin eyJkYXRhIjoiTGlzdCBvZiAzXG4gJCBtb2RpZmllZENvdW50OiBpbnQgMlxuICQgbWF0Y2hlZENvdW50IDogaW50IDJcbiAkIHVwc2VydGVkQ291bnQ6IGludCAwXG4ifQ== -->
 <pre><code>List of 3
- $ modifiedCount: int 0
+ $ modifiedCount: int 2
  $ matchedCount : int 2
  $ upsertedCount: int 0</code></pre>
 <!-- rnb-output-end -->
@@ -2162,20 +2207,22 @@ df</code></pre>
  $ upsertedCount: int 0</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSRmaW5kKCd7XCJuYW1lXCIgOiBcInBldGVyXCJ9JywgJ3tcImFnZVwiIDogdHJ1ZSwgXCJob2JiaWVzXCIgOiAxfScpXG5gYGAifQ== -->
 <pre class="r"><code>a$find(&#39;{&quot;name&quot; : &quot;peter&quot;}&#39;, &#39;{&quot;age&quot; : true, &quot;hobbies&quot; : 1}&#39;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6NCwibmNvbCI6M30sInJkZiI6Ikg0c0lBQUFBQUFBQUE0VlF5MDdETUJEY3ZLZ2FpWUxVQ3ovUnFDVUpOTGNlZ0FOSEJGSnZ5TEdUMUdwcVYwa3F1TUczOElWOFFXR2QycWlKUUVTS3ZUczczcDNaaDV0bDZDOTlBSERBQlJzY0QwUHduaDd2Sm5NQTE4YkV3c0pRM2E5SUdyZE1nSFA4WFYyNGlQTW9va21Zc0lSRU1jMWplaGxkWlhHY0g5ZlpMSXpJOVR4TTRqQm5OSnpTMmZ5ZmVqSTFnMmQ0ak5UQXhlMjdrZ2R2bitvY2ZDenUyeFRNamQrNEZYWVFhSlFQVnB5dXVTZ3dQRzFoZE5pbmJLUW9KRXYvaER1cjhBVFpaTFhtT2hwMG5qa3pJU215bjlreVRia2lkem9NSy9rU21DNUtsSDF3cHJSM1I5R1MxSFZQbHM5SVE0Szh3dmVZN1h0UEJuTGJjQ253a1QzK3hhcFY5WUN6blZCSzJJU3VkbUk5VWR2MjlacXNvNVc1UjdGekdHbC82VmFlYm5XU2lZSUw0OTByU1pxVk9obWg0OVp3c0syNGFJd1RST3Vna1EweFBKL0swaUN0TjloL0E5b1BHdXlsQWdBQSJ9 -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6NCwibmNvbCI6M30sInJkZiI6Ikg0c0lBQUFBQUFBQUE0VlF5V3JETUJBZGJ3MHh0Qmg4NlQrVW1CZzdJcm1YZmtCcEliY2llWXVJSXdYYm9UMzJ5OU5LN2lnNG9xVUNTVE52M2l4dm5oKzNXYmdOQWNBREgxendBbVZDOFByeXRGZ0QrSzV5SEJXWTYvOURrZUtSQ1JDcDYyUGdmbFhucTVwbHJHSVpZVFhaMEh4SjFxUWdremhacHFVZDMvd1RwNlp4cXA3YnNTSEF3eWVNSjhjYkl4NU5KcDN0ZUxIbm9zRTBSeXV5S1FjcEdsbXlQK0VyNllHZ2g2cEhyb2VnOThaTFk5S211dlNXakhGTnZxb3c3K1I3WXFyb29WelU0ZHV0aXBiMnZUVldXTktCSm5XbjhwVjN0bEptOGpod0tWU1NHLzhpMWVrc0lEb0pQVW01S0hZbnNWK2tlcjBoN3NtWjdNeWYyTjVQVC9jTGF3Vlk2NllTRFJkR2ZOQlNWclhvM0NuSm8rTGsySEV4R0NrSzdaTkJEdFR3d2tLMkJobkZ3ZmtiL1ROV1M1WUNBQUE9In0= -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["_id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["age"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["hobbies"],"name":[3],"type":["list"],"align":["right"]}],"data":[{"1":"5f44c939d9a45cf5c246e55f","2":"43","3":"<chr [1]>","_rn_":"1"},{"1":"5f44d134a783953fdc30c18f","2":"NA","3":"<int [1]>","_rn_":"2"},{"1":"5f44d134a783953fdc30c190","2":"52","3":"<chr [1]>","_rn_":"3"},{"1":"1","2":"52","3":"<chr [1]>","_rn_":"4"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[4]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["_id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["age"],"name":[2],"type":["int"],"align":["right"]},{"label":["hobbies"],"name":[3],"type":["list"],"align":["right"]}],"data":[{"1":"5f45fb3beb36bf69a40686c6","2":"43","3":"<chr [1]>","_rn_":"1"},{"1":"5f4601dbeb36bf69a40686c9","2":"NA","3":"<int [1]>","_rn_":"2"},{"1":"5f4601dbeb36bf69a40686ca","2":"52","3":"<chr [1]>","_rn_":"3"},{"1":"1","2":"52","3":"<chr [1]>","_rn_":"4"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[4]},"pages":{}}}
   </script>
 </div>
 <!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>No instance was updated given that addToSet adds only the content if the set doesn’t already contain the given value. To force a value, <strong>$push</strong> operator need to be used.</p>
+<p>No instance was updated given that *<span class="math inline">\(addToSet* adds only the content if the set doesn&#39;t already contain provided value. To force that, **\)</span>push** operator needs to be used.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSR1cGRhdGUoJ3tcIm5hbWVcIiA6IFwicGV0ZXJcIiwgXCJhZ2VcIiA6IDUyfScsICd7XCIkcHVzaFwiOiB7XCJob2JiaWVzXCIgOiBcIm1vbmdvZGJcIn19JylcbmBgYCJ9 -->
@@ -2197,14 +2244,16 @@ df</code></pre>
  $ upsertedCount: int 0</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSRmaW5kKCd7XCJuYW1lXCIgOiBcInBldGVyXCJ9JywgJ3tcImFnZVwiIDogdHJ1ZSwgXCJob2JiaWVzXCIgOiAxfScpXG5gYGAifQ== -->
 <pre class="r"><code>a$find(&#39;{&quot;name&quot; : &quot;peter&quot;}&#39;, &#39;{&quot;age&quot; : true, &quot;hobbies&quot; : 1}&#39;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6NCwibmNvbCI6M30sInJkZiI6Ikg0c0lBQUFBQUFBQUE0VlJ5MDZEUUJTOTVXRlRFcXRKTi81RVNTbWdzT3RDWGJnMG1uUm5oaG1nazlLWkJtaDBwOS9pRi9vRnJYY28wMUEySldIbXZzODVkMTRmbDc2emRBREFCQXNNTUcwMHdYNS9lNTVHQUphQnpnQVRJM1YvWWRHa3FRUzR4ZDlxRTNkaEZnUTA5bU1Xa3lDa1dVam53WDBhaGxrM3p6dy9JQStSSDRkK3hxZy9vMTUwSVIvUE5MQ0h4MWdCTHA1K0ZEMzQvbFBuOEhmeDByaWdiL3dtRGJFalFjMTh1T0owelVXTzVuVVRSb1Z0aWFsTE5sTGtraVVYM043Y1UvaHNVYllnbTdUcUFaZ2ZuR21UNU9tSm1Vd1Nyb3JQSm94SytlbnFLWXF5Y2RTdGxKMUQwWUpVVlkrV3cwaE4zS3pFZnZUMnZaYWgzTlpjQ213eUpwMUZuRjY1N0FWdWRrSXhZVk82Mm9uMWRLNEEyaVVPT2d1MU9yWjVoRFFPN1NpN0hYV1ZpcHdMcmQwdVNKSVdyVE5HeFkxZ2QxdHlVV3NsR0szY1d0WkUxemxVRmpyU2FJUDlQMjN3WEVIREFnQUEifQ== -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6NCwibmNvbCI6M30sInJkZiI6Ikg0c0lBQUFBQUFBQUE0VlJ5V3JETUJBZGJ3MHh0QTM0MG44b05nbDJSSEl2L1lEU1FtNUY4aFlSUndxMlEzdnNsNmNkdVpKeGRJbEE4aXh2bHZmODlySkx3MTBJQUI3NDRJSVhvQW5CeC90cnZBSHdYWFFjVE16Vjl4dEIwWUFFV09EMWRlSnBYV1hyaXFXc1pDbGhGZG5TYkVrMkpDZVRQRm11Q2p1L3ZaR25adkFLbi90aElNRHpEd3duMHpmUzhjVmswOW1lNXdjdWFsM21LRVlhNGhuSVVZcGFGdXlHYS9VZHcxZkNCSUlleTg0YTRIM3l3cGkwTHNmTkpHTmNnYTg2ekZ2NWxaZ3VhbVZYcy9UdFVYbER1ODVhS3l4b1Q1T3F4WHIwTGxiSlRKNTZMZ1VXdWRGRWlQR3Z0bGJnOFN6VUprV2M3OC9pRUN2dFF5MmlNeEhVbjlqZS8wajNWN2NLZEt1N1V0UmNHTzVCUTFuWmFPY0JHUStFazFQTFJXK1lZTFJMZXRsVGd3dHoyWmpJd0EwdWYyMHRHbVd6QWdBQSJ9 -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["_id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["age"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["hobbies"],"name":[3],"type":["list"],"align":["right"]}],"data":[{"1":"5f44c939d9a45cf5c246e55f","2":"43","3":"<chr [1]>","_rn_":"1"},{"1":"5f44d134a783953fdc30c18f","2":"NA","3":"<int [1]>","_rn_":"2"},{"1":"5f44d134a783953fdc30c190","2":"52","3":"<chr [3]>","_rn_":"3"},{"1":"1","2":"52","3":"<chr [1]>","_rn_":"4"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[4]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["_id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["age"],"name":[2],"type":["int"],"align":["right"]},{"label":["hobbies"],"name":[3],"type":["list"],"align":["right"]}],"data":[{"1":"5f45fb3beb36bf69a40686c6","2":"43","3":"<chr [1]>","_rn_":"1"},{"1":"5f4601dbeb36bf69a40686c9","2":"NA","3":"<int [1]>","_rn_":"2"},{"1":"5f4601dbeb36bf69a40686ca","2":"52","3":"<chr [3]>","_rn_":"3"},{"1":"1","2":"52","3":"<chr [1]>","_rn_":"4"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[4]},"pages":{}}}
   </script>
 </div>
 <!-- rnb-frame-end -->
@@ -2225,19 +2274,20 @@ df</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSRmaW5kKCd7XCJuYW1lXCIgOiBcInBldGVyXCJ9JywgJ3tcImFnZVwiIDogdHJ1ZSwgXCJob2JiaWVzXCIgOiAxfScpXG5gYGAifQ== -->
 <pre class="r"><code>a$find(&#39;{&quot;name&quot; : &quot;peter&quot;}&#39;, &#39;{&quot;age&quot; : true, &quot;hobbies&quot; : 1}&#39;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6NCwibmNvbCI6M30sInJkZiI6Ikg0c0lBQUFBQUFBQUE0VlJTMDdETUJDZDVrUFZTQlNrYnJoRW94WW4wT3hZQUF1V0NLVHVrR01ucWRYVXJwSlVzSU96Y0VKT1VCaW5kcFZtUTZUWTgza3o4OTc0K1g1SmdtVUFBQzU0NElEcm93bis2OHZqZEFIZ09lZ01NREhTOXdlQ0ppMFM0QkovenlTdTRqeUtXRUlTbnRBb1pubk1ycU9iTEk3emJwN1BTVVJ2RnlTSlNjNFptYkg1NHA5OE1yT0Q1M2lNOWNDN2h5OU5EejUvOURuOHZudHFYYkEzZnBPVzJJR2daVDVjQ2JZV3NrRHp2QTJqUWdOeExHU2paS0Y0Mm5kN2pZN2hrODM0a202eTJtQmRFM1RmQkxjbUxiSWpGWldtUW9OUE9vd3E5UjdhTHBxamN4Q3FwWnlPWWlXdDZ4NnRnTk9HaG5tRjllanRleVZEdFcyRWtsamtURHJLajg5YTlRSVhPNm1aOENsYjdlUjZTdlFBczdWQlo0TmV4M1lQSTUxZjA4bzNyYzR5V1FocHRmc2xUYlBTT0dOVTNBb090NVdRalZXQzBUcHNWRU10TG1DcXRKRldHK3ovQUV5YUlycTBBZ0FBIn0= -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6NCwibmNvbCI6M30sInJkZiI6Ikg0c0lBQUFBQUFBQUE0VlJ5MjZETUJCY0REUUtVdHRJWFBvUEZTZ1J4RXJ1VlQrZ2FxVGNLcHRYckJBN0FxTDIyQzlQYStnYUVWOXF5V1ozZHZZeHk5dkxQZ24yQVFDNDRBRUIxOWNtK0x2MzEyZ0Q0Qkh0T0Rvdzc3OWZtaFFPVElDRnZoNEdudFpsdWk1NXdndWVVRjdTTFV1WGRFTXpPb25UNVNxMzQ5dC80c3cwWHVubmZtZ0k4UHdOdzBueGhvZ3ZKcFBPRGlJN0NsbGhtdE1yUWdveGxKT1NsY3E1N1ZxRlJ2aG1FNzVrcDZKRnJvdWcreUZ5WTdLcUdFZFJuSXVlZkZOaDNxalAyRlRwWnlRb3k3TmJaVFZyVzJ1c0lHY2RpOHRHNTJ2dmFxWE0xTGtUU3Vva0VrNlVqNyt4c1lESGkrd255YVBzY0pISHFGOTJnRnR6Smh2MEpyYjcxNUw4WUNrZlM5MFZzaExTYVBkcnhvc2FuUWV0ZUJBY254c2hPNk5FbzIzY3FZNFpYcENwMmlDRE5yaitBZ01xdUN5a0FnQUEifQ== -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["_id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["age"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["hobbies"],"name":[3],"type":["list"],"align":["right"]}],"data":[{"1":"5f44c939d9a45cf5c246e55f","2":"43","3":"<chr [1]>","_rn_":"1"},{"1":"5f44d134a783953fdc30c18f","2":"NA","3":"<int [1]>","_rn_":"2"},{"1":"5f44d134a783953fdc30c190","2":"52","3":"<chr [2]>","_rn_":"3"},{"1":"1","2":"52","3":"<chr [1]>","_rn_":"4"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[4]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["_id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["age"],"name":[2],"type":["int"],"align":["right"]},{"label":["hobbies"],"name":[3],"type":["list"],"align":["right"]}],"data":[{"1":"5f45fb3beb36bf69a40686c6","2":"43","3":"<chr [1]>","_rn_":"1"},{"1":"5f4601dbeb36bf69a40686c9","2":"NA","3":"<int [1]>","_rn_":"2"},{"1":"5f4601dbeb36bf69a40686ca","2":"52","3":"<chr [2]>","_rn_":"3"},{"1":"1","2":"52","3":"<chr [1]>","_rn_":"4"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[4]},"pages":{}}}
   </script>
 </div>
 <!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
+</div>
 <div id="delete" class="section level2">
 <h2>Delete</h2>
-<p>Last but not least, deleting documents. In order to clean a little bit our mess.</p>
+<p>Last but not least, deleting documents. In order to clean up our mess.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSRyZW1vdmUoJ3tcIm5hbWVcIiA6IFwicGV0ZXJcIiwgXCJhZ2VcIiA6IHtcIiRuZVwiIDogNDN9fScpXG5gYGAifQ== -->
@@ -2250,20 +2300,21 @@ df</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSRmaW5kKClcbmBgYCJ9 -->
 <pre class="r"><code>a$find()</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6NSwibmNvbCI6NH0sInJkZiI6Ikg0c0lBQUFBQUFBQUEyMVMzVTdESUJRK284VzVKcHNtZTQ3MnBvbnhja3ZVQnpDYTdKWjJyTVZWYUlDcWx6NzVGRG9nSzBwQ3pzZjUvYzQ1UEQvc3lteVhBVUFDS1NCSXNJR0FYMStlOG51QUZKbkh6QmdXVm40WnA3VUJxYm0zMXNzWkVqVlFEeXRST1ppK0VVNERGaTEzR1BkVVUybkF5ajQySll4bjgramtuWk5ici84R2Q3S3hwT1h6OTY2ZHpkSkNvUkRaMDg0elVJTThPSWZaUHpvMDBVMFNBSnlpd0huTDZpUGpUVFFnek1rN1ZjNDM5UW10MGsrSE5CNWVNN1d0TmZ1Z0lhV29LbWFqSnlrWFVud1dQdTNTOG5UandISHR1aU5LUlR5elBkR2tPRWpMWU94aUVqSVh2V2FDbXlCME9iNndiaGtwYmdadW1lenp1aDM0TVMvZFN2d0tsazdpQzV5ZVM2S2Y2TWRjVWQ2dzhEdHdSNnF3cUpYcGVHeTQ2Q1hqMm5kaXRLclFRaFB2bDlXaTg1cnpoazYvdmxTRDNjd0NBQUE9In0= -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6NSwibmNvbCI6NH0sInJkZiI6Ikg0c0lBQUFBQUFBQUEyMVN5MDZFTUJTOWxOWnhTRVpOSnZFRFhHcGdvUnUzSnNZUE1Kck10a0FINm1CTGFGR1hmdm5vTGRPU2dRekpTUS8zY1hvZmZYM2VQQ1NiQkFCaW9FQWdaa2lCdmIrOXBJOEFsT0JQaEk2bE8zOHdhSTJFSXE1Y2xIZkVwaGVCNWpyM2xINXdKVWF1YStVNWE0VVZIWkxWSUFIZ0pHOFIxNGdieEIwaThiN29CTmJlNTBvZ295Z3ZSUk51TTMyMzlRSFJDUnVaMkNZQ0FQdFo0cUtXeFU2cWFqWU1wdmluTUQ2V0JrRm5ESlBnVmFEbjBqd1ZWbjZKVVZMbnVYVFpFOGxscDcreklPdUdRMzVoK05qODdxTGh4c3pxVEVwdWViYnRYQVZERjVPVWhXNnQxQXFUeVBINHh0VjJNOE5scjF3bFpWclV2ZHFsOTM0bFlRVXJmN0lqVGc5WGtyL1o2emdUcXBMalMyQU56OGRGWFdESFE4TloyMGxsUXlkb05ablZsb2U0cE5CTnNCdzJ0UDhIanIwSWNMZ0NBQUE9In0= -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["age"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["isActive"],"name":[3],"type":["lgl"],"align":["right"]},{"label":["hobbies"],"name":[4],"type":["list"],"align":["right"]}],"data":[{"1":"sue","2":"19","3":"TRUE","4":"<chr [2]>","_rn_":"1"},{"1":"bob","2":"42","3":"TRUE","4":"<chr [1]>","_rn_":"2"},{"1":"jane","2":"22","3":"TRUE","4":"<chr [2]>","_rn_":"3"},{"1":"john","2":"34","3":"TRUE","4":"<NULL>","_rn_":"4"},{"1":"peter","2":"43","3":"TRUE","4":"<chr [1]>","_rn_":"5"}],"options":{"columns":{"min":{},"max":[10],"total":[4]},"rows":{"min":[10],"max":[10],"total":[5]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["age"],"name":[2],"type":["int"],"align":["right"]},{"label":["isActive"],"name":[3],"type":["lgl"],"align":["right"]},{"label":["hobbies"],"name":[4],"type":["list"],"align":["right"]}],"data":[{"1":"sue","2":"19","3":"TRUE","4":"<chr [2]>","_rn_":"1"},{"1":"bob","2":"42","3":"TRUE","4":"<chr [1]>","_rn_":"2"},{"1":"jane","2":"22","3":"TRUE","4":"<chr [2]>","_rn_":"3"},{"1":"john","2":"34","3":"TRUE","4":"<NULL>","_rn_":"4"},{"1":"peter","2":"43","3":"TRUE","4":"<chr [1]>","_rn_":"5"}],"options":{"columns":{"min":{},"max":[10],"total":[4]},"rows":{"min":[10],"max":[10],"total":[5]},"pages":{}}}
   </script>
 </div>
 <!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Even the peter that had no age field was removes, as it matches the inequality.</p>
+<p>Even the “peter” that had no age field was removed, as it matches the inequality.</p>
+<p><strong>Lesson number 2: MongoDB can do some counterintuitive things</strong></p>
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiQ1JVRCBvcGVyYXRpb25zIGluIE1vbmdvREIiCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KCkJhc2ljIG9wZXJhdGlvbnMgaW4gYW55IGRhdGFiYXNlIGNvbXByaXNlOgoKKiAqKkMqKnJlYXRlCiogKipSKiplYWQKKiAqKlUqKnBkYXRlCiogKipEKiplbGV0ZQoKYGBge3J9CmxpYnJhcnkobW9uZ29saXRlKQphIDwtIG1vbmdvKGRiID0gInRlc3QiLCBjb2xsZWN0aW9uID0gImFnZW5kYSIpCmBgYAoKIyMgQ3JlYXRlCgpXZSBub3cga25vdyB0aGF0IGRvZXNuJ3QgbWF0dGVyIGlmIHRoZXkgZG9uJ3QgZXhpc3QsIG1vbmdvIHdpbGwgY3JlYXRlIHRoZW0gb3IgcmV0dXJuIG5vIGRhdGEgZm91bmQgYmVjYXVzZSBpdCdzIHJlYWxseSBoYXJkIHRvIGdldCBlcnJvcnMgZnJvbSBNb25nb0RCLiBXZSBjYW4gcnVuIE1vbmdvREIgcnVuIGNvbW1hbmQgd2l0aCBuYXRpdmUgTW9uZ29EQiBzeW50YXguCgpgYGB7cn0KcSA8LSAneyAKICAiaW5zZXJ0IjogImFnZW5kYSIsIAogICJkb2N1bWVudHMiOiBbeyJuYW1lIjogInN1ZSIsICJhZ2UiOiAxOSAsICJpc0FjdGl2ZSIgOiB0cnVlLCAiaG9iYmllcyI6IFsicGFkZWwiLCJzdXJmIl19XSwKICAiYnlwYXNzRG9jdW1lbnRWYWxpZGF0aW9uIiA6IHRydWV9JwphJHJ1bihxKQpgYGAKCk9yIHVzZSBtZXRob2RzIHByb3ZpZGVkIGJ5IG91ciBkcml2ZXIuCgpgYGB7cn0KYSRpbnNlcnQoJ3sibmFtZSI6ICJib2IiLCAiYWdlIjogNDIsICJpc0FjdGl2ZSIgOiB0cnVlLCAiaG9iYmllcyI6IFsic3VyZiJdfScpCnN0ciA8LSBjKCd7Im5hbWUiOiAiamFuZSIsICJhZ2UiOiAyMiwgImlzQWN0aXZlIiA6IHRydWUsICJob2JiaWVzIjogWyJzdXJmIiwicGFkZWwiXX0nLCAKICAgICAgICAgJ3sibmFtZSI6ICJqb2huIiwgImFnZSI6IDM0LCAiaXNBY3RpdmUiIDogdHJ1ZX0nLCAKICAgICAgICAgJ3sibmFtZSI6ICJwZXRlciIsICJhZ2UiOiA0MywgImlzQWN0aXZlIiA6IHRydWUsICJob2JiaWVzIjogWyJoaWNraW5nIl19JykKYSRpbnNlcnQoc3RyKQpgYGAKQWxsIGluc2VydGVkLgoKIyMgUmVhZAoKTW9yZSB0aGFuIHJlYWQsIG9uZSBvZiB0aGUgbWFpbiBmdW5jdGlvbnMgdG8gdXNlIHdpdGggdGhpcyB0eXBlIG9mIGRhdGFiYXNlcyBpcyBmaW5kLiBBIGZ1bmN0aW9uYWxpdHkgdGhhdCBhcHBsaWVzIGEgZmlsdGVyIHRvIG91ciBkYXRhIGFuZCBvbmx5IHJldHVybiB0aGUgaW5mb3JtYXRpb24gdGhhdCBmaXRzIGludG8gdGhlIGZpbHRlciBmb3IgYSBnaXZlbiBjb2xsZWN0aW9uLgoKYGBge3J9CmRmIDwtIGEkZmluZCgne30nKQpkZgpgYGAKU28sIGZvciBleGFtcGxlIGlmIHdlIHdvdWxkIGxpa2UgdG8gZmluZCBTdWUuCgpgYGB7cn0KYSRmaW5kKCd7Im5hbWUiIDogInN1ZSJ9JykKYGBgCk9yIHNvbWVib2R5IDIyIHllYXJzIG9sZCBhbmQgYWN0aXZlLgoKYGBge3J9CmEkZmluZCgneyJhZ2UiIDogMjIsICJpc0FjdGl2ZSIgOiB0cnVlfScpCmBgYAoKR3JlYXQhIEFuZCB3aGF0IGlmIHdlIHdvdWxkIGxpa2UgdG8gZmluZCBhZHVsdHMgKCBhZ2UgPiAxOCkuIFRoYXQgY2Fubm90IGJlIGRvbmUgdXNpbmcgZXF1YWxpdGllcy4uLiBNb25nb0RCIGhhcyBhIGNvbmNlcHQgY2FsbGVkIFtvcGVyYXRvcnNdKGh0dHBzOi8vZG9jcy5tb25nb2RiLmNvbS9tYW51YWwvcmVmZXJlbmNlL29wZXJhdG9yLykgZm9yIHRoYXQuCgoqIENvbXBhcmlzb246ICRlcSwgJG5lLCAkZ3QsICRsdGUsLi4uCiogTG9naWNhbDogJGFuZCwgJG9yLCAkbm90CiogRWxlbWVudDogJGV4aXN0cywgJHR5cGUKClRoaXMgYXJlIHRoZSBiYXNpYyBhbmQgbW9zdCB1c2VkIG9uZXMgYnV0IHBsZW50eSBjYW4gYmUgZm91bmQgaW50byB0aGVpciBkb2N1bWVudGF0aW9uLgoKU28gZm9yIG91ciBwcmV2aW91cyBxdWVzdGlvbiwgJGd0IChncmF0ZXItdGhhbikgb3BlcmF0b3Igd2lsbCBuZWVkIHRvIGJlIHVzZWQuCgpgYGB7cn0KYSRmaW5kKCd7ImFnZSIgOiB7IiRndCIgOiAxOH19JykKYGBgCgpPciBzb21lYm9keSBhY3RpdmUsIG92ZXIgMzAgYW5kIHdoZXJlIHRoZSBmaWVsZCBob2JiaWVzIGV4aXN0cy4KCmBgYHtyfQphJGZpbmQoJ3siJGFuZCIgOiBbeyJhZ2UiIDogeyIkZ3RlIiA6IDMwfX0seyJpc0FjdGl2ZSIgOiB7IiRlcSIgOiB0cnVlfX0seyJob2JiaWVzIiA6IHsgIiRleGlzdHMiIDogdHJ1ZX19XX0nKQpgYGAKR3JlYXQuIElmIHlvdSBzZWUgdGhlIHdob2xlIGRvY3VtZW50IGlzIHJldHVybmVkIGZyb20gdGhlIGRhdGFiYXNlIGZvciBldmVyeSBxdWVyeS4gVGhhdCBtYWtlcyBzZW5zZSB3aGVuIHRoZSB3aG9sZSBkb2N1bWVudCBpcyByZXF1aXJlZCAoYXMgYSBrZXktdmFsdWUgc3RvcmUpIGJ1dCB3aGF0IGlmIHdlIHdvdWxkIGxpa2UgdG8gb25seSBhZGRyZXNzIHBhcnQgb2YgdGhlIGluZm9ybWF0aW9uPyAoS2luZCBvZiBsaWtlIGNvbHVtbmFyIHN0b3JlcykKClRoYXQncyB3aGF0ICpwcm9qZWN0aW9ucyogYXJlIGZvci4gVXNpbmcgcHJvamVjdGlvbnMsIG9uZSBjYW4gaWRlbnRpZnkgd2hpY2ggcGFydCBvZiB0aGUgZG9jdW1lbnQgaXMgcmVxdWlyZWQuIEluIG1vbmdvbGl0ZSwgcHJvamVjdGlvbiBkZWZpbml0aW9uIGlzIGNhbGxlZCBmaWVsZHMuCgpgYGB7cn0KYSRmaW5kKHF1ZXJ5ID0gJ3siaXNBY3RpdmUiIDogdHJ1ZX0nLCBmaWVsZHMgPSAneyJuYW1lIiA6IHRydWUsICJhZ2UiIDogMX0nKQpgYGAKV2FpdCwgd2hhdCBpcyB0aGF0IF9pZD8gVGhhdCdzIHRoZSBpbmRleCBvZiB0aGUgZG9jdW1lbnQuIEV2ZXJ5IGRvY3VtZW50IGluc2lkZSBhIGNvbGxlY3Rpb24gaGFzICBhIHVuaXF1ZSBpZGVudGlmaWVyIHNvIHRoYXQgZXZlbiB0d28gZG9jdW1lbnRzIHdpdGggc2FtZSBwcm9wZXJ0aWVzIHdpbGwgYmUgaWRlbnRpZmllZCBieSB0aGVpciBfaWQuIFRoYXQncyBhY3R1YWxseSB0aGUga2V5IGluIG91ciBrZXktdmFsdWUgb3IgY29sdW1uIHN0b3JlIGtleSBmdW5jdGlvbmFsaXR5LgoKYGBge3J9CmEkaW5zZXJ0KCd7Im5hbWUiIDogInBldGVyIiwgImFnZSIgOiA1Mn0nKQphJGluc2VydCgneyJuYW1lIiA6ICJwZXRlciIsICJhZ2UiIDogNTJ9JykKYSRmaW5kKHF1ZXJ5ID0gJ3t9JywgZmllbGRzID0gJ3sibmFtZSIgOiB0cnVlLCAiYWdlIiA6IDF9JykKYGBgCgpPbmx5LCB0aGUgX2lkIGNhbiBzZXBhcmF0ZSB0aGUgdHdvIHBldGVycyB3ZSBqdXN0IGluc2VydGVkLiBXZSBjYW4gYWxzbyBwcm92aWRlIG91ciBvd24gX2lkIGJ1dCB3ZSB3aWxsIG5lZWQgdG8gbWFrZSBzdXJlIGl0IGlzIHVuaXF1ZSBmb3IgYSBnaXZlbiBkb2N1bWVudC4KCmBgYHtyfQphJGluc2VydCgneyJfaWQiIDogMSwgIm5hbWUiIDogInBldGVyIiwgImFnZSIgOiA1Mn0nKQphJGluc2VydCgneyJfaWQiIDogMSwgIm5hbWUiIDogInBldGVyIiwgImFnZSIgOiA1Mn0nKQpgYGAKCmBgYHtyfQphJGZpbmQocXVlcnkgPSAne30nLCBmaWVsZHMgPSAneyJuYW1lIiA6IHRydWUsICJhZ2UiIDogMX0nKQpgYGAKCldlIGNhbiBzZXQgX2lkIHByb2plY3Rpb24gdG8gZmFsc2UgYW5kIHRoYXQgd2F5IHRoZSBmaWVsZCB3ZSBpbml0aWFsbHkgd2FudGVkIHdpbGwgYmUgdGhlIG9ubHkgb25lcyBzaG93aW5nLgoKYGBge3J9CmEkZmluZChxdWVyeSA9ICd7fScsIGZpZWxkcyA9ICd7Im5hbWUiIDogdHJ1ZSwgImFnZSIgOiAxLCAiX2lkIiA6IGZhbHNlfScpCmBgYAoKIyMjIEFycmF5cwoKV2l0aCBhcnJheXMgc29tZSBpbnRlcmVzdGluZyB0aGluZ3MgaGFwcGVuLiBGb3IgZXhhbXBsZSwgd2hhdCBoYXBwZW5zIGlmIHdlIGFzayBhbiBhcnJheSBmaWVsZCB0byBtYXRjaCBhIHN0cmluZyBpdCBjb250YWlucz8KCmBgYHtyfQphJGZpbmQocXVlcnkgPSAneyJob2JiaWVzIiA6ICJwYWRlbCJ9JykKYGBgCgpJdCBsb29rcyBmb3IgdGhlIGV4aXN0ZW5jZSBpbnNpZGUgdGhlIGFycmF5IGl0c2VsZi4gSWYgeW91IHdvdWxkIGxpa2UgdG8gYXNrIGZvciB0aGUgb25lIHRoYXQgaG9sZHMgdGhlIHN0cmluZyBpbiBhIGNlcnRhaW4gcG9zaXRpb24sIHlvdSB3aWxsIG5lZWQgdG8gcmVmZXJlbmNlIHRoYXQgcG9zaXRpb24gdXNpbmcgZG90IG5vdGF0aW9uICgwIHBhZGRlZCkuCgpgYGB7cn0KYSRmaW5kKHF1ZXJ5ID0gJ3siaG9iYmllcy4xIiA6ICJwYWRlbCJ9JykKYGBgClRoYXQgZG90IG5vdGF0aW9uIGlzIHVzZWQgbm90IG9ubHkgd2l0aCBhcnJheXMgYnV0IGFsc28gd2l0aCBmaWVsZHMgY29udGFpbmluZyBuZXN0ZWQgSlNPTiBzdHJ1Y3R1cmVzLiBTb21lIGludGVyZXN0aW5nIGFycmF5IG9wZXJhdG9ycyBjYW4gYmUgZm91bmQgaW4gdGhlIFtkb2N1bWVudGF0aW9uXShodHRwczovL2RvY3MubW9uZ29kYi5jb20vbWFudWFsL3JlZmVyZW5jZS9vcGVyYXRvci9xdWVyeS1hcnJheS8pLgoKIyMgVXBkYXRlCgpPZiBjb3Vyc2UsIHNvbWUgZG9jdW1lbnRzIHdpbGwgbmVlZCB0byBiZSB1cGRhdGVkLiBGb3IgdGhhdCwgZG9jdW1lbnRzIHdpbGwgbmVlZCB0byBiZSBpZGVudGlmaWVkIGFuZCB0aGVuIHNvbWUgb3BlcmF0b3JzIHVzZWQgdG8gdXBkYXRlIHRob3NlLiBGb3IgZXhhbXBsZSBsZXQncyB1cGRhdGUgb3VyIDUyIHllYXIgb2xkICJwZXRlciJzLgoKYGBge3J9CmEkdXBkYXRlKCd7Im5hbWUiIDogInBldGVyIiwgImFnZSIgOiA1Mn0nLCAneyIkc2V0IjogeyJob2JiaWVzIiA6IDV9fScpCmBgYAoKT2ssIGJ1dCBpdCBzYXlzIG1hdGNoZWRDb3VudCAxLi4uIHdoaWNoIG9uZT8KCmBgYHtyfQphJGZpbmQoJ3sibmFtZSIgOiAicGV0ZXIifScpCmBgYAoKT2ssIHRoYXQgb25lLiBXYWl0LCBidXQgd2h5IGRpZCBpdCBvbmx5IHVwZGF0ZSBvbmUgb2YgdGhlbT8gV2VsbCwgTW9uZ29EQiB3b3JrcyBsaWtlIHRoYXQuIFRoZSBmaXJzdCBvbmUgdGhhdCBtYXRjaGVzIGlzIHVwZGF0ZWQuIElmIGFsbCBuZWVkIHRvIGJlIHVwZGF0ZWQsIGl0IG5lZWRzIHRvIGJlIHNhaWQuCgpgYGB7cn0KYSR1cGRhdGUoJ3sibmFtZSIgOiAicGV0ZXIiLCAiYWdlIiA6IDUyfScsICd7IiRzZXQiOiB7ImhvYmJpZXMiIDogNX19JywgbXVsdGlwbGUgPSBUUlVFKQphJGZpbmQoJ3sibmFtZSIgOiAicGV0ZXIifScpCmBgYAoKVGhlcmUgYWxzbyBleGlzdCBvcGVyYXRvcnMgdG8gcmVuYW1lIGEgZmllbGQuCgpgYGB7cn0KYSR1cGRhdGUoJ3sibmFtZSIgOiAicGV0ZXIiLCAiYWdlIiA6IDUyfScsICd7IiRyZW5hbWUiOiB7ImFnZSIgOiAieWVhcnNvbGQifX0nKQpgYGAKT3IgaW5jcmVtZW50IGEgdmFsdWUgaW5zaWRlIGEgZmllbGQuCgpgYGB7cn0KYSR1cGRhdGUoJ3sibmFtZSIgOiAicGV0ZXIiLCAiYWdlIiA6IDUyfScsICd7IiRpbmMiOiB7InllYXJzb2xkIiA6IDEuMn19JykKYGBgCmBgYHtyfQphJGZpbmQoJ3sibmFtZSIgOiAicGV0ZXIifScpCmBgYAoKU29tZSB0aGluZ3MgaGFwcGVuZWQgdGhlcmUuIFdlIGluY3JlbWVudGVkIGEgZmllbGQgdGhhdCBkb2Vzbid0IGV4aXN0cyBpbiBhIGdpdmVuIGRvY3VtZW50IGFuZCBmb3JjZXMgdGhlIHJlc3Qgb2YgdGhlIGRvY3VtZW50cyB0aGF0IGNvbnRhaW4gdGhhdCBmaWVsZCB0byBiZSByZWludGVycHJldGVkIGFzIHN1Y2guCgpUaGF0J3Mgb2RkIGJ1dCBNb25nb0RCIGlzIGxpa2UgdGhhdC4uLgoKVGhlcmUgYXJlIHNvbWUgYWRkaXRpb25hbCBvcGVyYXRvcnMgZm9yIGFycmF5IHVwZGF0ZXMgYXMgd2VsbC4KCmBgYHtyfQphJHVwZGF0ZSgneyJuYW1lIiA6ICJwZXRlciIsICJhZ2UiIDogNTJ9JywgJ3siJHNldCI6IHsiaG9iYmllcyIgOiBbIm1vbmdvZGIiXX19JywgbXVsdGlwbGUgPSBUUlVFKQphJHVwZGF0ZSgneyJuYW1lIiA6ICJwZXRlciIsICJhZ2UiIDogNTJ9JywgJ3siJGFkZFRvU2V0IjogeyJob2JiaWVzIiA6ICJtb25nb2RiIn19JykKYGBgCmBgYHtyfQphJGZpbmQoJ3sibmFtZSIgOiAicGV0ZXIifScsICd7ImFnZSIgOiB0cnVlLCAiaG9iYmllcyIgOiAxfScpCmBgYAoKTm8gaW5zdGFuY2Ugd2FzIHVwZGF0ZWQgZ2l2ZW4gdGhhdCBhZGRUb1NldCBhZGRzIG9ubHkgdGhlIGNvbnRlbnQgaWYgdGhlIHNldCBkb2Vzbid0IGFscmVhZHkgY29udGFpbiB0aGUgZ2l2ZW4gdmFsdWUuIFRvIGZvcmNlIGEgdmFsdWUsICoqJHB1c2gqKiBvcGVyYXRvciBuZWVkIHRvIGJlIHVzZWQuCgpgYGB7cn0KYSR1cGRhdGUoJ3sibmFtZSIgOiAicGV0ZXIiLCAiYWdlIiA6IDUyfScsICd7IiRwdXNoIjogeyJob2JiaWVzIiA6ICJtb25nb2RiIn19JykKYSR1cGRhdGUoJ3sibmFtZSIgOiAicGV0ZXIiLCAiYWdlIiA6IDUyfScsICd7IiRwdXNoIjogeyJob2JiaWVzIiA6ICJtb25nb2RiIn19JykKYGBgCmBgYHtyfQphJGZpbmQoJ3sibmFtZSIgOiAicGV0ZXIifScsICd7ImFnZSIgOiB0cnVlLCAiaG9iYmllcyIgOiAxfScpCmBgYAoKT2YgY291cnNlIG11bHRpcGxlIHdhcyBub3QgdXNlZCBzbyBvbmx5IG9uZSBpbnN0YW5jZSB3YXMgdXBkYXRlZC4uLiB3aGF0IGEgbWVzcyEgUmVhbGx5IHRyaWNreSB0aGluZ3MgY2FuIGJlIGRvbmUuCgpgYGB7cn0KYSR1cGRhdGUoJ3sibmFtZSIgOiAicGV0ZXIiLCAiYWdlIiA6IDUyfScsICd7IiRwdXNoIiA6IHsgImhvYmJpZXMiIDogeyAiJGVhY2giIDogWyJtb25nb2RiIiwgIm1vbmdvZGIiLCAibW9uZ29kYiJdLCAiJHBvc2l0aW9uIiA6IDAsICIkc2xpY2UiIDogLTJ9fX0nKQphJGZpbmQoJ3sibmFtZSIgOiAicGV0ZXIifScsICd7ImFnZSIgOiB0cnVlLCAiaG9iYmllcyIgOiAxfScpCmBgYAoKIyMgRGVsZXRlCgpMYXN0IGJ1dCBub3QgbGVhc3QsIGRlbGV0aW5nIGRvY3VtZW50cy4gSW4gb3JkZXIgdG8gY2xlYW4gYSBsaXR0bGUgYml0IG91ciBtZXNzLgoKYGBge3J9CmEkcmVtb3ZlKCd7Im5hbWUiIDogInBldGVyIiwgImFnZSIgOiB7IiRuZSIgOiA0M319JykKYGBgCgpgYGB7cn0KYSRmaW5kKCkKYGBgCgpFdmVuIHRoZSBwZXRlciB0aGF0IGhhZCBubyBhZ2UgZmllbGQgd2FzIHJlbW92ZXMsIGFzIGl0IG1hdGNoZXMgdGhlIGluZXF1YWxpdHkuCgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiQ1JVRCBvcGVyYXRpb25zIGluIE1vbmdvREIiCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KCkJhc2ljIG9wZXJhdGlvbnMgaW4gYW55IGRhdGFiYXNlIGNvbXByaXNlOgoKKiAqKkMqKnJlYXRlCiogKipSKiplYWQKKiAqKlUqKnBkYXRlCiogKipEKiplbGV0ZQoKYGBge3J9CmxpYnJhcnkobW9uZ29saXRlKQphIDwtIG1vbmdvKGRiID0gInRlc3QiLCBjb2xsZWN0aW9uID0gImFnZW5kYSIpCmBgYAoKIyMgQ3JlYXRlCgpXZSBub3cga25vdyB0aGF0IGRvZXNuJ3QgbWF0dGVyIGlmIHRoZSBjb2xsZWN0aW9uIG9yIHRoZSBkYXRhYmFzZSBkb24ndCBleGlzdCwgTW9uZ29EQiB3aWxsIGNyZWF0ZSB0aGVtIG9yIHJldHVybiBubyBkYXRhIGZvdW5kIGJlY2F1c2UgaXQncyByZWFsbHkgaGFyZCB0byBnZXQgZXJyb3JzIGZyb20gTW9uZ29EQi4gV2UgY2FuIHJ1biBNb25nb0RCIHJ1biBjb21tYW5kIHdpdGggbmF0aXZlIE1vbmdvREIgc3ludGF4LgoKYGBge3J9CnEgPC0gJ3sgCiAgImluc2VydCI6ICJhZ2VuZGEiLCAKICAiZG9jdW1lbnRzIjogW3sibmFtZSI6ICJzdWUiLCAiYWdlIjogMTkgLCAiaXNBY3RpdmUiIDogdHJ1ZSwgImhvYmJpZXMiOiBbInBhZGVsIiwic3VyZiJdfV0sCiAgImJ5cGFzc0RvY3VtZW50VmFsaWRhdGlvbiIgOiB0cnVlfScKYSRydW4ocSkKYGBgCgpUaGF0J3MgZmluZSBidXQgdXN1YWxseSBvdXIgZHJpdmVyLCBsaWJyYXJ5IG9yIGNsaWVudCB3aWxsIHByb3ZpZGUgc2ltcGxlciBtZXRob2RzIHRvIGRvIHRoZSBzYW1lIHRoaW5nLiBJbiB0aGlzIGNhc2UgbW9uZ29saXRlIGltcGxlbWVudHMgc2V2ZXJhbCBvZiB0aGUgcm91dGluZXMgb2Z0ZW4gdXNlZCBpbiBNb25nb0RCLgoKYGBge3J9CmEKYGBgCgpTbywgKippbnNlcnQqKiBpcyBvbmUgb2YgdGhlbSwgYWxsb3dpbmcgdXMgdG8gc2ltcGxpZnkgb3VyIGNvZGUgKGp1c3QgYSBiaXQpLgoKYGBge3J9CmEkaW5zZXJ0KCd7Im5hbWUiOiAiYm9iIiwgImFnZSI6IDQyLCAiaXNBY3RpdmUiIDogdHJ1ZSwgImhvYmJpZXMiOiBbInN1cmYiXX0nKQpzdHIgPC0gYygneyJuYW1lIjogImphbmUiLCAiYWdlIjogMjIsICJpc0FjdGl2ZSIgOiB0cnVlLCAiaG9iYmllcyI6IFsic3VyZiIsInBhZGVsIl19JywgCiAgICAgICAgICd7Im5hbWUiOiAiam9obiIsICJhZ2UiOiAzNCwgImlzQWN0aXZlIiA6IHRydWV9JywgCiAgICAgICAgICd7Im5hbWUiOiAicGV0ZXIiLCAiYWdlIjogNDMsICJpc0FjdGl2ZSIgOiB0cnVlLCAiaG9iYmllcyI6IFsiaGlja2luZyJdfScpCmEkaW5zZXJ0KHN0cikKYGBgCkFsbCBpbnNlcnRlZC4KCiMjIFJlYWQKCk1vcmUgdGhhbiByZWFkLCBvbmUgb2YgdGhlIG1haW4gZnVuY3Rpb25zIHRvIHVzZSB3aXRoIHRoaXMgdHlwZSBvZiBkYXRhYmFzZXMgaXMgKipmaW5kKiouIEEgZnVuY3Rpb25hbGl0eSB0aGF0IGFwcGxpZXMgYSBmaWx0ZXIgdG8gb3VyIGRhdGEgYW5kIG9ubHkgcmV0dXJucyB0aGUgaW5mb3JtYXRpb24gdGhhdCBmaXRzIGludG8gc2FpZCBmaWx0ZXIgZm9yIGEgZ2l2ZW4gY29sbGVjdGlvbi4KCmBgYHtyfQpkZiA8LSBhJGZpbmQoJ3t9JykKZGYKYGBgClNvLCBmb3IgZXhhbXBsZSBpZiB3ZSB3b3VsZCBsaWtlIHRvIGZpbmQgU3VlLgoKYGBge3J9CmEkZmluZCgneyJuYW1lIiA6ICJzdWUifScpCmBgYApPciBzb21lYm9keSAyMiB5ZWFycyBvbGQgYW5kIGFjdGl2ZS4KCmBgYHtyfQphJGZpbmQoJ3siYWdlIiA6IDIyLCAiaXNBY3RpdmUiIDogdHJ1ZX0nKQpgYGAKCkdyZWF0ISBBbmQgd2hhdCBpZiB3ZSB3b3VsZCBsaWtlIHRvIGZpbmQgYWR1bHRzICggYWdlID4gMTggKS4gVGhhdCBjYW5ub3QgYmUgZG9uZSB1c2luZyBlcXVhbGl0aWVzLi4uIE1vbmdvREIgaGFzIGEgY29uY2VwdCBjYWxsZWQgW29wZXJhdG9yc10oaHR0cHM6Ly9kb2NzLm1vbmdvZGIuY29tL21hbnVhbC9yZWZlcmVuY2Uvb3BlcmF0b3IvKSBmb3IgdGhhdC4KCiogQ29tcGFyaXNvbjogJGVxLCAkbmUsICRndCwgJGx0ZQoqIExvZ2ljYWw6ICRhbmQsICRvciwgJG5vdAoqIEVsZW1lbnQ6ICRleGlzdHMsICR0eXBlCgpUaGVzZSBhcmUgc29tZSBvZiB0aGUgYmFzaWMgYnV0IG1vc3QgdXNlZCBvbmVzLiBQbGVudHkgY2FuIGJlIGZvdW5kIGludG8gdGhlaXIgZG9jdW1lbnRhdGlvbi4KClRoZWlyIHVzYWdlIGlzIG9mdGVuIGRlZmluZWQgYXM6CgpgYGBtb25nb2RiCnsgPGZpZWxkPiA6IHsgPG9wZXJhdG9yPiA6IDx2YWx1ZT4gfSB9CmBgYAoKT3IsCgpgYGBtb25nb2RiCnsgPG9wZXJhdG9yPiA6IHsgPGZpZWxkPiA6IDx2YWx1ZT4gfSB9CmBgYAoKSXQgd2lsbCBkZXBlbmQgb24gdGhlIG9wZXJhdG9yIGRlZmluaXRpb24gaXRzZWxmLgoKU28gZm9yIG91ciBwcmV2aW91cyBxdWVzdGlvbiwgKiRndCogKGdyYXRlci10aGFuKSBvcGVyYXRvciB3aWxsIG5lZWQgdG8gYmUgdXNlZC4KCmBgYHtyfQphJGZpbmQoJ3siYWdlIiA6IHsiJGd0IiA6IDE4fX0nKQpgYGAKCk9yIHNvbWVib2R5IGFjdGl2ZSwgb3ZlciAzMCBhbmQgd2hlcmUgdGhlIGZpZWxkIGhvYmJpZXMgZXhpc3RzLgoKYGBge3J9CmEkZmluZCgneyIkYW5kIiA6IFt7ImFnZSIgOiB7IiRndGUiIDogMzB9fSx7ImlzQWN0aXZlIiA6IHsiJGVxIiA6IHRydWV9fSx7ImhvYmJpZXMiIDogeyAiJGV4aXN0cyIgOiB0cnVlfX1dfScpCmBgYApHcmVhdC4gSWYgeW91IHBheSBhdHRlbnRpb24sIHRoZSB3aG9sZSBkb2N1bWVudCBpcyByZXR1cm5lZCBmcm9tIHRoZSBkYXRhYmFzZSBmb3IgZXZlcnkgcXVlcnkuCgpUaGF0IG1ha2VzIHNlbnNlIHdoZW4gdGhlIHdob2xlIGRvY3VtZW50IGlzIHJlcXVpcmVkICh3b3JraW5nIGxpa2UgYSBrZXktdmFsdWUgc3RvcmUpIGJ1dCB3aGF0IGlmIHdlIHdvdWxkIGxpa2UgdG8gb25seSBhZGRyZXNzIHBhcnQgb2YgdGhlIGluZm9ybWF0aW9uPyAoS2luZCBvZiBsaWtlIGNvbHVtbmFyIHN0b3JlcykKClRoYXQncyB3aGF0ICpwcm9qZWN0aW9ucyogYXJlIGZvci4gVXNpbmcgcHJvamVjdGlvbnMsIG9uZSBjYW4gaWRlbnRpZnkgd2hpY2ggcGFydCBvZiB0aGUgZG9jdW1lbnQgaXMgcmVxdWlyZWQuIEluIG1vbmdvbGl0ZSwgcHJvamVjdGlvbiBkZWZpbml0aW9uIGlzIGNhbGxlZCAqKmZpZWxkcyoqLgoKYGBge3J9CmEkZmluZChxdWVyeSA9ICd7ImlzQWN0aXZlIiA6IHRydWV9JywgZmllbGRzID0gJ3sibmFtZSIgOiB0cnVlLCAiYWdlIiA6IDF9JykKYGBgCldhaXQsIHdoYXQgaXMgdGhhdCAqX2lkKiBmaWVsZD8gVGhhdCdzIHRoZSBpbmRleCBvZiB0aGUgZG9jdW1lbnQuIEV2ZXJ5IGRvY3VtZW50IGluc2lkZSBhIGNvbGxlY3Rpb24gaGFzIGEgdW5pcXVlIGlkZW50aWZpZXIgc28gdGhhdCBldmVuIHR3byBkb2N1bWVudHMgd2l0aCBzYW1lIHByb3BlcnRpZXMgd2lsbCBiZSBpZGVudGlmaWVkIGJ5IHRoZWlyICpfaWQqLiBUaGF0J3MgYWN0dWFsbHkgdGhlIGtleSBpbiBvdXIga2V5LXZhbHVlIG9yIGNvbHVtbiBzdG9yZS1saWtlIGZ1bmN0aW9uYWxpdHkuCgpgYGB7cn0KYSRpbnNlcnQoJ3sibmFtZSIgOiAicGV0ZXIiLCAiYWdlIiA6IDUyfScpCmEkaW5zZXJ0KCd7Im5hbWUiIDogInBldGVyIiwgImFnZSIgOiA1Mn0nKQphJGZpbmQocXVlcnkgPSAne30nLCBmaWVsZHMgPSAneyJuYW1lIiA6IHRydWUsICJhZ2UiIDogMX0nKQpgYGAKCk9ubHksIHRoZSAqX2lkKiBjYW4gc2VwYXJhdGUgdGhlIHR3byAicGV0ZXIicyB3ZSBqdXN0IGluc2VydGVkLiBXZSBjYW4gYWxzbyBwcm92aWRlIG91ciBvd24gKl9pZCogYnV0IHdlIHdpbGwgbmVlZCB0byBtYWtlIHN1cmUgaXQgaXMgdW5pcXVlIGZvciBhIGdpdmVuIGNvbGxlY3Rpb24KCmBgYHtyfQphJGluc2VydCgneyJfaWQiIDogMSwgIm5hbWUiIDogInBldGVyIiwgImFnZSIgOiA1Mn0nKQphJGluc2VydCgneyJfaWQiIDogMSwgIm5hbWUiIDogInBldGVyIiwgImFnZSIgOiA1Mn0nKQpgYGAKCmBgYHtyfQphJGZpbmQocXVlcnkgPSAne30nLCBmaWVsZHMgPSAneyJuYW1lIiA6IHRydWUsICJhZ2UiIDogMX0nKQpgYGAKCldlIGNhbiBzZXQgKl9pZCogcHJvamVjdGlvbiB0byBmYWxzZSAoZmFsc2UgYW5kIHplcm8gYXJlIGVxdWFsbHkgY29uc2lkZXJlZCkgYW5kIHRoYXQgd2F5IHRoZSBmaWVsZHMgd2UgaW5pdGlhbGx5IHdhbnRlZCB3aWxsIGJlIHRoZSBvbmx5IG9uZXMgc2hvd2luZy4KCmBgYHtyfQphJGZpbmQocXVlcnkgPSAne30nLCBmaWVsZHMgPSAneyJuYW1lIiA6IHRydWUsICJhZ2UiIDogMSwgIl9pZCIgOiBmYWxzZX0nKQpgYGAKCiMjIyBBcnJheXMKCkFycmF5cyBhbmQgbmVzdGVkIGRvY3VtZW50cyBhcmUga2luZCBvZiBlc3BlY2lhbCBjb25zdHJ1Y3RzIHRoYXQgcmVxdWlyZSBzb21lIGF0dGVudGlvbi4gQWN0dWFsbHksIE1vbmdvREIgY2FuIHNob3cgc29tZSB1bmV4cGVjdGVkIGJlaGF2aW9yIGluIHRob3NlIGNhc2VzLiAKCkZvciBleGFtcGxlLCB3aGF0IGhhcHBlbnMgaWYgd2UgYXNrIGFuIGFycmF5IGZpZWxkIHRvIG1hdGNoIGEgc3RyaW5nPwoKYGBge3J9CmEkZmluZChxdWVyeSA9ICd7ImhvYmJpZXMiIDogInBhZGVsIn0nKQpgYGAKCkl0IGxvb2tzIGZvciB0aGUgZXhpc3RlbmNlIGluc2lkZSB0aGUgYXJyYXkgaXRzZWxmLiBNb25kb0RCIGluc3RlYWQgb2YgZXZhbHVhdGluZyB0aGUgZXF1YWxpdHkgc2VhcmNoZXMgaW5zaWRlIHRoZSBhcnJheS4gCgpJZiB5b3Ugd291bGQgbGlrZSB0byBhc2sgZm9yIHRoZSBvbmUgdGhhdCBob2xkcyB0aGUgc3RyaW5nIGluIGEgY2VydGFpbiBwb3NpdGlvbiwgeW91IHdpbGwgbmVlZCB0byByZWZlcmVuY2UgdGhhdCBwb3NpdGlvbiB1c2luZyBkb3Qgbm90YXRpb24gKDAgcGFkZGVkKS4KCmBgYHtyfQphJGZpbmQocXVlcnkgPSAneyJob2JiaWVzLjEiIDogInBhZGVsIn0nKQpgYGAKVGhhdCBkb3Qgbm90YXRpb24gaXMgdXNlZCB0aGUgc2FtZSB3YXkgd2l0aCBmaWVsZHMgY29udGFpbmVkIGluc2lkZSBuZXN0ZWQgSlNPTiBzdHJ1Y3R1cmVzLiBTb21lIGludGVyZXN0aW5nIGFycmF5IG9wZXJhdG9ycyBjYW4gYmUgZm91bmQgaW4gdGhlIFtkb2N1bWVudGF0aW9uXShodHRwczovL2RvY3MubW9uZ29kYi5jb20vbWFudWFsL3JlZmVyZW5jZS9vcGVyYXRvci9xdWVyeS1hcnJheS8pLgoKIyMgVXBkYXRlCgpPZiBjb3Vyc2UsIHNvbWUgZG9jdW1lbnRzIGluc2lkZSBvdXIgY29sbGVjdGlvbiB3aWxsIG5lZWQgdG8gYmUgdXBkYXRlZC4gRm9yIHRoYXQsIGRvY3VtZW50cyB3aWxsIG5lZWQgdG8gYmUgaWRlbnRpZmllZCBhbmQgdGhlbiBzb21lIG9wZXJhdG9ycyB1c2VkIHRvIHVwZGF0ZSB0aG9zZS4gCgpGb3IgZXhhbXBsZSBsZXQncyB1cGRhdGUgb3VyIDUyIHllYXIgb2xkICJwZXRlciJzIHVzaW5nIHRoZSAqJHNldCogb3BlcmF0b3IgdGhhdCBhbGxvd3MgdXMgdG8gc2V0IGEgbmV3IGtleS12YWx1ZSBwYWlyIGluc2lkZSBpZGVudGlmaWVkIGRvY3VtZW50cy4KCmBgYHtyfQphJHVwZGF0ZSgneyJuYW1lIiA6ICJwZXRlciIsICJhZ2UiIDogNTJ9JywgJ3siJHNldCI6IHsiaG9iYmllcyIgOiA1fX0nKQpgYGAKCk9rLCBidXQgaXQgc2F5cyBtYXRjaGVkQ291bnQgMSwgd2UgaGFkIGxpa2UgdGhyZWUgInBldGVyInMgdGhhdCBtYXRjaCB0aGF0IGRlc2NyaXB0aW9uLi4uIHdoaWNoIG9uZSBpcyBpdCB0aGVuPwoKYGBge3J9CmEkZmluZCgneyJuYW1lIiA6ICJwZXRlciJ9JykKYGBgCgpPaywgdGhhdCBvbmUhIFdhaXQsIGJ1dCB3aHkgZGlkIGl0IG9ubHkgdXBkYXRlIG9uZSBvZiB0aGVtPyBXZWxsLCBNb25nb0RCIHdvcmtzIGxpa2UgdGhhdC4gVGhlIGZpcnN0IG9uZSB0aGF0IG1hdGNoZXMgaXMgdXBkYXRlZC4gSWYgYWxsIG5lZWQgdG8gYmUgdXBkYXRlZCwgaXQgbmVlZHMgdG8gYmUgc2FpZC4KCmBgYHtyfQphJHVwZGF0ZSgneyJuYW1lIiA6ICJwZXRlciIsICJhZ2UiIDogNTJ9JywgJ3siJHNldCI6IHsiaG9iYmllcyIgOiA1fX0nLCBtdWx0aXBsZSA9IFRSVUUpCmEkZmluZCgneyJuYW1lIiA6ICJwZXRlciJ9JykKYGBgCgpUaGVyZSBhbHNvIGV4aXN0cyBhbiBvcGVyYXRvciB0byAqJHJlbmFtZSogYSBmaWVsZC4KCmBgYHtyfQphJHVwZGF0ZSgneyJuYW1lIiA6ICJwZXRlciIsICJhZ2UiIDogNTJ9JywgJ3siJHJlbmFtZSI6IHsiYWdlIiA6ICJ5ZWFyc29sZCJ9fScpCmBgYAoKT3IgdG8gaW5jcmVtZW50IGEgdmFsdWUgaW5zaWRlIGEgZmllbGQsICokaW5jKi4KCmBgYHtyfQphJHVwZGF0ZSgneyJuYW1lIiA6ICJwZXRlciIsICJhZ2UiIDogNTJ9JywgJ3siJGluYyI6IHsieWVhcnNvbGQiIDogMS4yfX0nKQpgYGAKCmBgYHtyfQphJGZpbmQoJ3sibmFtZSIgOiAicGV0ZXIifScpCmBgYAoKClNvbWUgdGhpbmdzIGhhcHBlbmVkIHRoZXJlLiBXZSBkaWQgaW5jcmVtZW50IGEgZmllbGQgdGhhdCBkb2Vzbid0IGV4aXN0cyBpbiBhIGdpdmVuIGRvY3VtZW50IGFuZCB0aGF0IGZvcmNlcyB0aGUgcmVzdCBvZiB0aGUgZG9jdW1lbnRzIHRoYXQgY29udGFpbiB0aGUgZmllbGQgdG8gYmUgcmVpbnRlcnByZXRlZCB0byB0aGUgc2FtZSB0eXBlIHdoZW4gcXVlcmllZC4KClRoYXQncyBvZGQgYnV0IE1vbmdvREIgaXMgYSB3ZWlyZCBmZWxsYS4uLgoKIyMjIEFycmF5cwoKVGhlcmUgYXJlIHNvbWUgYWRkaXRpb25hbCBvcGVyYXRvcnMgZm9yIGFycmF5IHVwZGF0ZXMgYXMgd2VsbC4KCmBgYHtyfQphJHVwZGF0ZSgneyJuYW1lIiA6ICJwZXRlciIsICJhZ2UiIDogNTJ9JywgJ3siJHNldCI6IHsiaG9iYmllcyIgOiBbIm1vbmdvZGIiXX19JywgbXVsdGlwbGUgPSBUUlVFKQphJHVwZGF0ZSgneyJuYW1lIiA6ICJwZXRlciIsICJhZ2UiIDogNTJ9JywgJ3siJGFkZFRvU2V0IjogeyJob2JiaWVzIiA6ICJtb25nb2RiIn19JykKYGBgCgoKYGBge3J9CmEkZmluZCgneyJuYW1lIiA6ICJwZXRlciJ9JywgJ3siYWdlIiA6IHRydWUsICJob2JiaWVzIiA6IDF9JykKYGBgCgpObyBpbnN0YW5jZSB3YXMgdXBkYXRlZCBnaXZlbiB0aGF0ICokYWRkVG9TZXQqIGFkZHMgb25seSB0aGUgY29udGVudCBpZiB0aGUgc2V0IGRvZXNuJ3QgYWxyZWFkeSBjb250YWluIHByb3ZpZGVkIHZhbHVlLiBUbyBmb3JjZSB0aGF0LCAqKiRwdXNoKiogb3BlcmF0b3IgbmVlZHMgdG8gYmUgdXNlZC4KCmBgYHtyfQphJHVwZGF0ZSgneyJuYW1lIiA6ICJwZXRlciIsICJhZ2UiIDogNTJ9JywgJ3siJHB1c2giOiB7ImhvYmJpZXMiIDogIm1vbmdvZGIifX0nKQphJHVwZGF0ZSgneyJuYW1lIiA6ICJwZXRlciIsICJhZ2UiIDogNTJ9JywgJ3siJHB1c2giOiB7ImhvYmJpZXMiIDogIm1vbmdvZGIifX0nKQpgYGAKCgoKYGBge3J9CmEkZmluZCgneyJuYW1lIiA6ICJwZXRlciJ9JywgJ3siYWdlIiA6IHRydWUsICJob2JiaWVzIiA6IDF9JykKYGBgCgoKCk9mIGNvdXJzZSBtdWx0aXBsZSB3YXMgbm90IHVzZWQgc28gb25seSBvbmUgaW5zdGFuY2Ugd2FzIHVwZGF0ZWQuLi4gd2hhdCBhIG1lc3MhIFJlYWxseSB0cmlja3kgdGhpbmdzIGNhbiBiZSBkb25lLgoKYGBge3J9CmEkdXBkYXRlKCd7Im5hbWUiIDogInBldGVyIiwgImFnZSIgOiA1Mn0nLCAneyIkcHVzaCIgOiB7ICJob2JiaWVzIiA6IHsgIiRlYWNoIiA6IFsibW9uZ29kYiIsICJtb25nb2RiIiwgIm1vbmdvZGIiXSwgIiRwb3NpdGlvbiIgOiAwLCAiJHNsaWNlIiA6IC0yfX19JykKYSRmaW5kKCd7Im5hbWUiIDogInBldGVyIn0nLCAneyJhZ2UiIDogdHJ1ZSwgImhvYmJpZXMiIDogMX0nKQpgYGAKCiMjIERlbGV0ZQoKTGFzdCBidXQgbm90IGxlYXN0LCBkZWxldGluZyBkb2N1bWVudHMuIEluIG9yZGVyIHRvIGNsZWFuIHVwIG91ciBtZXNzLgoKYGBge3J9CmEkcmVtb3ZlKCd7Im5hbWUiIDogInBldGVyIiwgImFnZSIgOiB7IiRuZSIgOiA0M319JykKYGBgCgoKYGBge3J9CmEkZmluZCgpCmBgYAoKRXZlbiB0aGUgInBldGVyIiB0aGF0IGhhZCBubyBhZ2UgZmllbGQgd2FzIHJlbW92ZWQsIGFzIGl0IG1hdGNoZXMgdGhlIGluZXF1YWxpdHkuCgoqKkxlc3NvbiBudW1iZXIgMjogTW9uZ29EQiBjYW4gZG8gc29tZSBjb3VudGVyaW50dWl0aXZlIHRoaW5ncyoqCg==</div>
 
 
 

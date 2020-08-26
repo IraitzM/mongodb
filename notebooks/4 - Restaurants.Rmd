@@ -3,7 +3,7 @@ title: "Restaurants"
 output: html_notebook
 ---
 
-We will do an exercise using some more complicated information inside data. There is a file containing restaurant information. An array of JSONs that can be easily ingested.
+We will do an exercise using some more complicated documents but closer to real usage. There is a file containing restaurant information. An array of JSONs that can be easily ingested using mongolite's import functionality.
 
 ```{r}
 library(mongolite)
@@ -17,22 +17,31 @@ Done! How many documents are there?
 r$count()
 ```
 
-That's simple enough but trying to infer the schema could be really tricky. For that it is much easier to use MongoDB's [Compass](https://www.mongodb.com/products/compass) tool that allows to explore the schema interactively.
+That's simple enough. Now what? We could try to launch some queries...
+
+```{r}
+r$find(limit = 10)
+```
+
+But trying to infer the schema could be really tricky given that each document can be potentially different. 
+
+For that it is much easier to use MongoDB's [Compass](https://www.mongodb.com/products/compass) tool that allows to explore the schema interactively.
 
 ![](images/schema.png)
 
-From there it can be easily inferred the information contained inside our collection, the percentage of data belonging to each data type inside a field or even the query to filter said information.
+From there it can be easily explored the information contained inside our collection, the percentage of data belonging to each data type inside a field or even the query to filter said information subset with a simple click.
 
 ![](images/schema2.png)
 
 Even if we have geospatial information we can get a map visualizing where each document information is geographically located.
 
 ![](images/schema3.png)
-Most of what we have done inside this notebook can be done using Compass in a more visuall manner. Importing documents for example.
+Most of what we have done inside this notebook can be done using Compass in a more visual manner. 
+Importing documents for example.
 
 ![](images/import.png)
 
-Or aggregation pipelines.
+Or building aggregation pipelines.
 
 ![](images/aggregation.png)
 
@@ -45,7 +54,7 @@ df <- r$find('')
 nrow(df)
 ```
 
-### How many Chinese or Japanese restaurants?
+### How many Chinese or Japanese restaurants are there? In Mahattan?
 
 ```{r}
 df <- r$find('')
@@ -57,6 +66,15 @@ nrow(df)
 ```{r}
 df <- r$find('')
 nrow(df)
+```
+
+### How many restaurants are there per borough?
+
+```{r}
+q <- '[
+            {"$group" : {"_id" : "", "numrestaurants" : {}}
+]'
+r$aggregate(q)
 ```
 
 ### Show top 10 restaurants in Mahattan
@@ -73,6 +91,8 @@ q <- '[
 ]'
 r$aggregate(q)
 ```
+
+# On indexes and efficiency
 
 How efficient is that query? As we already discussed, the only indexed field is the _id field so when we condition that aggregation by *borough* it needs to scan the whole collection to get the right documents to process.
 
@@ -97,23 +117,23 @@ system.time(r$find('{"borough" : "Mahattan"}'))
 ```
 ![](images/explainidx.png)
 
-Indexes can be really useful and being an operational database for XXI century applications, text and geospatial searches are key. Imagine that you would like to complement the previous request as follows...
+Indexes can be really useful and being MongoDB an operational database for 21st century applications, text and geospatial searches are included. Imagine that you would like to complement the previous request as follows...
 
 # Find top 10 coffee houses near me
 
-First, we will need what means "near me". That is given my location and restaurant location I need to do a search for those that are at a given distance.
+First, we will need to define what means *near me*. That is given my location and restaurant location I need to do a search for those that are at a given distance.
 
 ```{r}
 r$index(add = '{ "address.coord" : "2d" }')
 ```
 
-With that index created we can look for documents whose informed location is close to a given location.
+With that index created we can look for documents with location field informed and close to a given location (mine).
 
 ```{r}
 r$find('{ "address.coord" : { "$geoWithin" : { "$center" : [ [-74, 40.74 ] , 0.01 ] } } }')
 ```
 
-It certainly is more spectacular when used inside an application that draws maps.
+It certainly is more spectacular when used inside an application that shows it on a map.
 
 ![](images/geo.png)
 
@@ -135,7 +155,7 @@ Or look on any text field using a wildcard.
 r$index(add = '{ "$**" : "text"}')
 ```
 
-It takes a while but thanks to this we can use the $text and $search operators and look for coffee houses.
+It takes a while but thanks to this we can use the *text* and *search* operators and look for coffee houses.
 
 ```{r}
 r$find('{ "$text": { "$search": "cafe" } }')
@@ -157,4 +177,5 @@ Not as impressive as in Compass :)
 
 ![](images/closecoffee.png)
 
+**Lesson number 4: Indexes are cool!**
 

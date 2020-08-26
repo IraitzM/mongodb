@@ -1772,39 +1772,38 @@ summary {
 <li>Database: test</li>
 <li>Collection: test</li>
 </ul>
-<p>So it should be empty so far. We can actually ask for databases when connected to the admin collection.</p>
+<p>So it should be empty so far. We can actually ask for databases when connected to the <em>admin</em> collection.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWRtaW4kcnVuKCd7XCJsaXN0RGF0YWJhc2VzXCI6MX0nKVxuXG5gYGAifQ== -->
-<pre class="r"><code>admin$run(&#39;{&quot;listDatabases&quot;:1}&#39;)
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWRtaW4gPC0gbW9uZ28oZGIgPSBcImFkbWluXCIpXG5hZG1pbiRydW4oJ3tcImxpc3REYXRhYmFzZXNcIjoxfScpXG5gYGAifQ== -->
+<pre class="r"><code>admin &lt;- mongo(db = &quot;admin&quot;)
+admin$run(&#39;{&quot;listDatabases&quot;:1}&#39;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiJGRhdGFiYXNlc1xuIn0= -->
 <pre><code>$databases</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MywibmNvbCI6M30sInJkZiI6Ikg0c0lBQUFBQUFBQUExMVFUVS9ETUF4MTB3YTBTQnRJL0k3MndnR09PMHhja1JCSXU0WTJHOUhTcEdveThYSGl4M0xtSnd5YzRrd3NsaUxiejM1K3NSOVc2MnV4RmdCUVFnVU1TbzRoOEtmSHUvb1dvR0tZRkZpWVJmK0dUVmRUSjhBbE1XS0J5NjdYbHBLejF0bU4zcWFTY2EwMEdDeGkvL0lMSmx0K2s2Y2NUZERjZjNZaXpxM3NsYytFcXdoU0xMeitVUGQycGYwdVVWUS9oUGRzem14MHIwMmFOY2ZIUHYvVXlseXdOZElud1FTS1RnYlpiTVlvQzNESUtPZHVDTnBaSkxGNEpwNlJpekVETHZZMi9xU3IyNWU5M2RVM2RJYUMzcHg4ZVJwSFNmWkRvM2k2dXJKYmJkWHg2dkpaR1VvV3VQRzBjRE9NMm9hMENhSytDUzdJMUNkYVp4SXk3UWFIWHdodnlDRWRBZ0FBIn0= -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MywibmNvbCI6M30sInJkZiI6Ikg0c0lBQUFBQUFBQUExMVFTMDRETVF6MWZBSnFwQllrempHejZZWmxGeFZiSkFSU3R5R1RscWdaWnpSSnhXZkY4VGdJNXlna2c0UGFXSXBzUC92NXhYNVliNVo4d3dHZ2docEtxRmdJZ1QwOTNqVzNBSFVaa2lJVVp0Ry9oYWFicVJQZ21oaXh3RVRYYTZUa1FscmM2bDBxR1N1RkNjRWk5cSsrWWJMVkYzbktnM0dhZTJKbjRneEZyMXdtWEVlUVl1NzBoN3JIdFhiN1JGSDk0Tit6T2JQUnZyWnAxank4OHZOUHJjb0ZwUkV1Q1NhUWQ4S0xkanRHV1lCalJybTBnOWNXQTZtTVoySVp1Umd6NE9xQThTZGRJMThPdUcrV2RJYUMzcHg4ZFI1SHlmS0hSckYwZFlVN2plci82dUpaR1VvV1llTnA0WFlZTmZxMFNVQmQ2NjBYcVk5TGF4SXk3UWJIWDRQcDZGa2RBZ0FBIn0= -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["sizeOnDisk"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["empty"],"name":[3],"type":["lgl"],"align":["right"]}],"data":[{"1":"admin","2":"40960","3":"FALSE","_rn_":"1"},{"1":"config","2":"61440","3":"FALSE","_rn_":"2"},{"1":"local","2":"40960","3":"FALSE","_rn_":"3"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[3]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["sizeOnDisk"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["empty"],"name":[3],"type":["lgl"],"align":["right"]}],"data":[{"1":"admin","2":"40960","3":"FALSE","_rn_":"1"},{"1":"config","2":"12288","3":"FALSE","_rn_":"2"},{"1":"local","2":"40960","3":"FALSE","_rn_":"3"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[3]},"pages":{}}}
   </script>
 </div>
 <!-- rnb-frame-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG4kdG90YWxTaXplXG5bMV0gMTQzMzYwXG5cbiRva1xuWzFdIDFcbiJ9 -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG4kdG90YWxTaXplXG5bMV0gOTQyMDhcblxuJG9rXG5bMV0gMVxuIn0= -->
 <pre><code>
 $totalSize
-[1] 143360
+[1] 94208
 
 $ok
 [1] 1</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Funnny… test database doesn’t even exist! But we can ask for its collections.</p>
+<p>Funny… <em>test</em> database doesn’t even exist! But we can ask for its collections.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubSRydW4oJ3tcImxpc3RDb2xsZWN0aW9uc1wiOjF9JylcblxuYGBgIn0= -->
-<pre class="r"><code>m$run(&#39;{&quot;listCollections&quot;:1}&#39;)
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubSRydW4oJ3tcImxpc3RDb2xsZWN0aW9uc1wiOjF9JylcbmBgYCJ9 -->
+<pre class="r"><code>m$run(&#39;{&quot;listCollections&quot;:1}&#39;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiJGN1cnNvclxuJGN1cnNvciRpZFxuWzFdIDBcblxuJGN1cnNvciRuc1xuWzFdIFwidGVzdC4kY21kLmxpc3RDb2xsZWN0aW9uc1wiXG5cbiRjdXJzb3IkZmlyc3RCYXRjaFxubGlzdCgpXG5cblxuJG9rXG5bMV0gMVxuIn0= -->
 <pre><code>$cursor
@@ -1826,9 +1825,8 @@ $ok
 <p>We can even insert some information.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubSRpbnNlcnQoJ3tcIm5hbWVcIiA6IFwidGVzdFwifScpXG5cbmBgYCJ9 -->
-<pre class="r"><code>m$insert(&#39;{&quot;name&quot; : &quot;test&quot;}&#39;)
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubSRpbnNlcnQoJ3tcIm5hbWVcIiA6IFwidGVzdFwifScpXG5gYGAifQ== -->
+<pre class="r"><code>m$insert(&#39;{&quot;name&quot; : &quot;test&quot;}&#39;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiTGlzdCBvZiA2XG4gJCBuSW5zZXJ0ZWQgIDogaW50IDFcbiAkIG5NYXRjaGVkICAgOiBpbnQgMFxuICQgbk1vZGlmaWVkICA6IGludCAwXG4gJCBuUmVtb3ZlZCAgIDogaW50IDBcbiAkIG5VcHNlcnRlZCAgOiBpbnQgMFxuICQgd3JpdGVFcnJvcnM6IGxpc3QoKVxuIn0= -->
 <pre><code>List of 6
@@ -1844,9 +1842,8 @@ $ok
 <p>Inserted! But where?</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubSRydW4oJ3tcImxpc3RDb2xsZWN0aW9uc1wiOjF9JylcblxuYGBgIn0= -->
-<pre class="r"><code>m$run(&#39;{&quot;listCollections&quot;:1}&#39;)
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubSRydW4oJ3tcImxpc3RDb2xsZWN0aW9uc1wiOjF9JylcbmBgYCJ9 -->
+<pre class="r"><code>m$run(&#39;{&quot;listCollections&quot;:1}&#39;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiJGN1cnNvclxuJGN1cnNvciRpZFxuWzFdIDBcblxuJGN1cnNvciRuc1xuWzFdIFwidGVzdC4kY21kLmxpc3RDb2xsZWN0aW9uc1wiXG5cbiRjdXJzb3IkZmlyc3RCYXRjaFxuIn0= -->
 <pre><code>$cursor
@@ -1858,7 +1855,7 @@ $cursor$ns
 
 $cursor$firstBatch</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MSwibmNvbCI6NX0sInJkZiI6Ikg0c0lBQUFBQUFBQUE2VlR6VXJFTUJCTzAwVGRnait3RjE5aWkrTEZvNGdJbmhaRVlXOUxiTEphTnFhbFRYVVhmQStmUTd5TEh2VG9jL2dVVzVNMktXMVdRZHhDNk14OE05K1hZVExuSjZPRFlCUUFBSHlBQUFRK1ZpYkFseGVuZzBNQUVGU09wNENlL3M5VVVsK2o2dXkwQUNSWkxwMVlFQ1djczBqR2lUQlZ3S0hEZ3R5eTNKUzVZQzlMN2tPYnNGa0IxZWt5Ukp6a3VTdE1pU1RoSkZPMXlsc1ljVjBXR0JyOTlXc2I3dXJxMTgvMzQ3Mmo0Y05MK3ZiMStQejA0Y2dnT1U4MWw4NzFVRTJxRTJCcHBLRkozTWdZb1VQQjU3YXdLR0phNS9ybGNoK28vTlBWL1ZZbE5ERnZtUTI2YlA1NE5mSHVpQlhaMkJIeTdidTRzNHBUMXJRdUtwNy9xM2VVY0llMVBaWGFYazlTL2RCeUM4VmlrbGdvcG1lQ3N0bXFkMm5RUmd2QW4zYkJ5NXpBZGlIMHJla2d1aW5FZExEZmVvak9GQnNiLzlMK0doUFhzYkJOWTA2dUdEZk9sdHFYYWwzQ05JdUZ0SjJvYUI3S1JCTGVXa3NicWFlOCtBYW45dTZKQWdRQUFBPT0ifQ== -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MSwibmNvbCI6NX0sInJkZiI6Ikg0c0lBQUFBQUFBQUE2VlR6VXJFTUJCT2sxYmRnait3RjhGbmFDK0NDTjVFQkUvQ29yQzNFcHVzbHNhMHRLbnVYbndDang3MWVYd0NQZnNrVzVNMktXMVdRZHhDNk14OE05K1hZVEtUcyttaFAvVUJBQWk0QUFMa1NSTjQxMWZud1RFQUxwU09JNEdSK3M5bDBsaWg4dXoxQUZmUVVsZ3hQODRZbzdGSU1xNnJnRVhuY1h4UFMxMW1nNk1pZXd4TnduWUROR2ZJRUROY2xyWXd3UUtIczBMV1NtK3B4VldacjJuVU4yNXR1SytxbnladjdQWGxOSDMrUFBoNFAvbUtMQmxYTEhMRnBYSWR0eVZWQ2JEVzBsQW5iaFVVazB2T0ZxYXdxaExTNXFKNnRRKzMvdFBWVWE4UzZwaXp5Z1p0TmhTdEp6NGNzU1NMTENGazNzV0RVVXhwMXpwdmVQNnZQbER5QnF6OXFiVDJacGFyaDFZYUtPR3p6RUFKdWVDRXp0ZTlTNGQyV2dEK3RBdE9ZUVYySzY1dVRZTDRydUpwY05SN2lOWVVPOXY3cGYwTnltOFRicHIyR0w2aFREczdjbCthZFFuekl1SENkQ0tqWlNneWdWbHZMVTJrbmZMeUcyUWN6TVVDQkFBQSJ9 -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["type"],"name":[2],"type":["chr"],"align":["left"]},{"label":["options"],"name":[3],"type":["data.frame"],"align":["right"]},{"label":["info"],"name":[4],"type":["data.frame"],"align":["right"]},{"label":["idIndex"],"name":[5],"type":["data.frame"],"align":["right"]}],"data":[{"1":"test","2":"collection","3":"<data.frame [1 × 0]>","4":"<data.frame [1 × 2]>","5":"<data.frame [1 × 3]>","_rn_":"1"}],"options":{"columns":{"min":{},"max":[10],"total":[5]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
@@ -1876,24 +1873,23 @@ $ok
 <p>Wait the collection got created! And the database?</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWRtaW4kcnVuKCd7XCJsaXN0RGF0YWJhc2VzXCI6MX0nKVxuXG5gYGAifQ== -->
-<pre class="r"><code>admin$run(&#39;{&quot;listDatabases&quot;:1}&#39;)
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWRtaW4kcnVuKCd7XCJsaXN0RGF0YWJhc2VzXCI6MX0nKVxuYGBgIn0= -->
+<pre class="r"><code>admin$run(&#39;{&quot;listDatabases&quot;:1}&#39;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiJGRhdGFiYXNlc1xuIn0= -->
 <pre><code>$databases</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6NCwibmNvbCI6M30sInJkZiI6Ikg0c0lBQUFBQUFBQUEyVlJ6VTdETUF4MjB3YTBTQnRJUEVkNzJDNGNkNWk0SWlHUWRnMXROcUsxU2RWazR1ZkV3KzR0a0FaT2NDWldMRm0yUDhmKzdQaGh0VjZJdFFDQUhBcGdrSE4wZ1Q4OTNwVzNBQVhESU1QRUpOZzNmSFFUWHdKY294YVU0TExwdEtIZ29yWm1vN2NwMWRwYXRoUVVYam1QZGhiODVRR2lMTC9JSHM0dGlvZ2MvK1JzS0c1a3B4d05sQ2VpQUpJdm5QNVE5MmFsM1M2VnFLNzM3Nk0razhHK1ZxblhGSlY5RXR1WXNHNmxTNFFKRkkzMHN0b01nUmJnT0NxNXRMM1gxbUFSQzkvSFI4WFpNQUt1OWlaTTBwVDF5OTdzeWpsOVJVWTZKVnY4OGZOZlN2Wk5yWGk2aGpKYmJkVHBHdkpacFd2TWNPTzRjTlVQMnZpMENhS3U4dGFmcmlacTJ5WWs3Z2JISHkrejhXWTFBZ0FBIn0= -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6NCwibmNvbCI6M30sInJkZiI6Ikg0c0lBQUFBQUFBQUEyVlJ6VTdETUF4MjJ3UzBTQnRJUEVkNzJXRWNkNWk0SWlHUWRnMXROcUsxU2RWazR1ZkVvM0hrUVhpT1FWTHNhUVJMbHUzUHNUODd2bHV0NTJJdEFLQUFCamtVUExqQUgrNXZ5bXNBbG9jZ0M0bEp0Qy9oMGRYNEV1QXlLTU1FbDAybkRRWm50VFVidmFWVWEydlpZc0M4Y2o3WVdmU1hYekRLOGhNdHhSOUFJa2FPZi9KbktHNWtweHdPVkJCUkJORVhUcitwVzdQU2JrY2xxdXY5YTlKbk10am5pbnBOZytidnlKWVMxcTEwUkVpZ2FLU1gxV2FJdEFDSHBPVGM5bDViRTRyeStIMDhLYzZHQkxqWW16aEpVOVpQZTdNckYvZ1ZHZW9VTFR2eGkxL0svQnRiY2JxR01sdHQxUEVhOGxIUk5XWmg0M0hocWgrMDhiUkpRRjNsclQ5ZVRkUzJKV1RjRFE0L3graVI5RFVDQUFBPSJ9 -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["sizeOnDisk"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["empty"],"name":[3],"type":["lgl"],"align":["right"]}],"data":[{"1":"admin","2":"40960","3":"FALSE","_rn_":"1"},{"1":"config","2":"110592","3":"FALSE","_rn_":"2"},{"1":"local","2":"40960","3":"FALSE","_rn_":"3"},{"1":"test","2":"40960","3":"FALSE","_rn_":"4"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[4]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["sizeOnDisk"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["empty"],"name":[3],"type":["lgl"],"align":["right"]}],"data":[{"1":"admin","2":"40960","3":"FALSE","_rn_":"1"},{"1":"config","2":"12288","3":"FALSE","_rn_":"2"},{"1":"local","2":"40960","3":"FALSE","_rn_":"3"},{"1":"test","2":"8192","3":"FALSE","_rn_":"4"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[4]},"pages":{}}}
   </script>
 </div>
 <!-- rnb-frame-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG4kdG90YWxTaXplXG5bMV0gMjMzNDcyXG5cbiRva1xuWzFdIDFcbiJ9 -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG4kdG90YWxTaXplXG5bMV0gMTAyNDAwXG5cbiRva1xuWzFdIDFcbiJ9 -->
 <pre><code>
 $totalSize
-[1] 233472
+[1] 102400
 
 $ok
 [1] 1</code></pre>
@@ -1903,7 +1899,10 @@ $ok
 <p>The database too! So the information is there.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MSwibmNvbCI6MX0sInJkZiI6Ikg0c0lBQUFBQUFBQUExMVB5d3JDTUJEY1BxSzA0QVA4anViU2l4OGdmb0FvOUJyYnFNV1lsRFpGdjc2YWhBVExucEtkblptZE9SMnFNcTl5QUVnZ2hSZ1NZcjVBTHVkanNRZElZek5FWnBIWjkyTklPd2NBYkdlTFZQTkJJektSN01VSFRMUWdJbWE5ZXROQVhubjNDTHZWZ2czWUxXK1ladlRXTzArWWtHU3BPdDBxYVVTeHpVeVFPT29Sc0JtbFRkRVU5V09VejZLMEIvNXA1c2x3eXZqcnJZaTNXbkI1YnlVUDJRVzdjdUdIdFducnl0S3ViNlVPVFF3NlVLMDBDN3k4VmlJZ3JodE1QK09ySHVlcUFRQUEifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubSRmaW5kKClcbmBgYCJ9 -->
+<pre class="r"><code>m$find()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MSwibmNvbCI6MX0sInJkZiI6Ikg0c0lBQUFBQUFBQUExMlBUUTdDSUJDRnB6OW9TdUpQNGpuS3hvMEhNQjdBYU5JdFZ0UkdoQVpvOVBSVmFFcHNaZ1h6NXMyWDk0Nzdha3NyQ2dBWjVKQkNSdndYeVBsMEtIY0FlZXFIeEMrSzhINjhhVE1JQU92SkluZkNPbVFtaXIrRXhjWWdJbU5oOUp0RjgyS2tKNWhXUzI0eGpWNjU0K3htQmliMDZHU3VXOWRvNVkvU2tKbWc0OFFnWWRXcGtPSmExbzlPUFVONW9QODAwMlE0WmZvZFVXUkV6WVM2TjByRTdKSmZoQnlIcFc4N2xHV3RhWlNMVGJ4cW1kT09SeCt0dFl6SzBBMzZIeGZRNys2cUFRQUEifQ== -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["name"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"test","_rn_":"1"}],"options":{"columns":{"min":{},"max":[10],"total":[1]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
@@ -1912,13 +1911,11 @@ $ok
 <!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>So, lesson number 1:</p>
-<ul>
-<li>Typos can get us into trouble when using MongoDB!</li>
-</ul>
+<p><strong>Lesson number 1 : Flexibility means that typos can get us into trouble when using MongoDB!</strong></p>
+<p>End of notebook number 1 :)</p>
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiRmlyc3Qgc3RlcHMgd2l0aCBNb25nb0RCIgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tCgpBcyBhbHdheXMgaGFwcGVucywgd2hlbiB3ZSB3YW50IHRvIGludGVyYWN0IHdpdGggYSBkYXRhYmFzZSwgYSBkcml2ZXIgaXMgbmVlZGVkLiBTb21lb25lIHdobyB0cmFuc2xhdGVzIG91ciBuZWVkcyB0byB0aGUgc2VydmluZyBzeXN0ZW0uIEluIG9yZGVyIHRvIGludGVyYWN0IHdpdGggTW9uZ29EQiBmcm9tIFIsIFttb25nb2xpdGVdKGh0dHBzOi8vamVyb2VuLmdpdGh1Yi5pby9tb25nb2xpdGUvKSBwYWNrYWdlIHdpbGwgaGVscCB1cyBkb2luZyBzby4KCmBgYHtyfQpsaWJyYXJ5KG1vbmdvbGl0ZSkKYGBgCgpFYXN5LXBlYXN5ISBOb3cgbGV0J3MgY29ubmVjdCB0byB0aGUgZGF0YWJhc2UuCgpgYGB7cn0KbSA8LSBtb25nbygpCmBgYAoKQXMgc2ltcGxlIGFzIHRoYXQhIEl0IGlzIHdvcnRoIG5vdGljaW5nIHRoYXQgYnkgZGVmYXVsdCBpdCB3aWxsIGNvbm5lY3QgdG86CgoqIEhvc3Q6IGxvY2FsaG9zdAoqIFBvcnQ6IDI3MDE3CiogRGF0YWJhc2U6IHRlc3QKKiBDb2xsZWN0aW9uOiB0ZXN0CgpTbyBpdCBzaG91bGQgYmUgZW1wdHkgc28gZmFyLiBXZSBjYW4gYWN0dWFsbHkgYXNrIGZvciBkYXRhYmFzZXMgd2hlbiBjb25uZWN0ZWQgdG8gdGhlIGFkbWluIGNvbGxlY3Rpb24uCgpgYGB7cn0KYWRtaW4gPC0gbW9uZ28oZGIgPSAiYWRtaW4iKQphZG1pbiRydW4oJ3sibGlzdERhdGFiYXNlcyI6MX0nKQpgYGAKCkZ1bm5ueS4uLiB0ZXN0IGRhdGFiYXNlIGRvZXNuJ3QgZXZlbiBleGlzdCEgQnV0IHdlIGNhbiBhc2sgZm9yIGl0cyBjb2xsZWN0aW9ucy4KCmBgYHtyfQptJHJ1bigneyJsaXN0Q29sbGVjdGlvbnMiOjF9JykKYGBgCldlIGNhbiBldmVuIGluc2VydCBzb21lIGluZm9ybWF0aW9uLgoKYGBge3J9Cm0kaW5zZXJ0KCd7Im5hbWUiIDogInRlc3QifScpCmBgYApJbnNlcnRlZCEgQnV0IHdoZXJlPwoKYGBge3J9Cm0kcnVuKCd7Imxpc3RDb2xsZWN0aW9ucyI6MX0nKQpgYGAKV2FpdCB0aGUgY29sbGVjdGlvbiBnb3QgY3JlYXRlZCEgQW5kIHRoZSBkYXRhYmFzZT8KCmBgYHtyfQphZG1pbiRydW4oJ3sibGlzdERhdGFiYXNlcyI6MX0nKQpgYGAKClRoZSBkYXRhYmFzZSB0b28hIFNvIHRoZSBpbmZvcm1hdGlvbiBpcyB0aGVyZS4KCmBgYHtyfQptJGZpbmQoKQpgYGAKClNvLCBsZXNzb24gbnVtYmVyIDE6IAoKKiBUeXBvcyBjYW4gZ2V0IHVzIGludG8gdHJvdWJsZSB3aGVuIHVzaW5nIE1vbmdvREIhCgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiRmlyc3Qgc3RlcHMgd2l0aCBNb25nb0RCIgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tCgpBcyBhbHdheXMgaGFwcGVucywgd2hlbiB3ZSB3YW50IHRvIGludGVyYWN0IHdpdGggYSBkYXRhYmFzZSwgYSBkcml2ZXIgaXMgbmVlZGVkLiBTb21lb25lIHdobyB0cmFuc2xhdGVzIG91ciBuZWVkcyB0byB0aGUgc2VydmluZyBzeXN0ZW0uIEluIG9yZGVyIHRvIGludGVyYWN0IHdpdGggTW9uZ29EQiBmcm9tIFIsIFttb25nb2xpdGVdKGh0dHBzOi8vamVyb2VuLmdpdGh1Yi5pby9tb25nb2xpdGUvKSBwYWNrYWdlIHdpbGwgaGVscCB1cyBkb2luZyBzby4KCmBgYHtyfQpsaWJyYXJ5KG1vbmdvbGl0ZSkKYGBgCgpFYXN5LXBlYXN5ISBOb3cgbGV0J3MgY29ubmVjdCB0byB0aGUgZGF0YWJhc2UuCgpgYGB7cn0KbSA8LSBtb25nbygpCmBgYAoKQXMgc2ltcGxlIGFzIHRoYXQhIEl0IGlzIHdvcnRoIG5vdGljaW5nIHRoYXQgYnkgZGVmYXVsdCBpdCB3aWxsIGNvbm5lY3QgdG86CgoqIEhvc3Q6IGxvY2FsaG9zdAoqIFBvcnQ6IDI3MDE3CiogRGF0YWJhc2U6IHRlc3QKKiBDb2xsZWN0aW9uOiB0ZXN0CgpTbyBpdCBzaG91bGQgYmUgZW1wdHkgc28gZmFyLiBXZSBjYW4gYWN0dWFsbHkgYXNrIGZvciBkYXRhYmFzZXMgd2hlbiBjb25uZWN0ZWQgdG8gdGhlICphZG1pbiogY29sbGVjdGlvbi4KCmBgYHtyfQphZG1pbiA8LSBtb25nbyhkYiA9ICJhZG1pbiIpCmFkbWluJHJ1bigneyJsaXN0RGF0YWJhc2VzIjoxfScpCmBgYAoKRnVubnkuLi4gKnRlc3QqIGRhdGFiYXNlIGRvZXNuJ3QgZXZlbiBleGlzdCEgQnV0IHdlIGNhbiBhc2sgZm9yIGl0cyBjb2xsZWN0aW9ucy4KCmBgYHtyfQptJHJ1bigneyJsaXN0Q29sbGVjdGlvbnMiOjF9JykKYGBgCldlIGNhbiBldmVuIGluc2VydCBzb21lIGluZm9ybWF0aW9uLgoKYGBge3J9Cm0kaW5zZXJ0KCd7Im5hbWUiIDogInRlc3QifScpCmBgYApJbnNlcnRlZCEgQnV0IHdoZXJlPwoKYGBge3J9Cm0kcnVuKCd7Imxpc3RDb2xsZWN0aW9ucyI6MX0nKQpgYGAKV2FpdCB0aGUgY29sbGVjdGlvbiBnb3QgY3JlYXRlZCEgQW5kIHRoZSBkYXRhYmFzZT8KCmBgYHtyfQphZG1pbiRydW4oJ3sibGlzdERhdGFiYXNlcyI6MX0nKQpgYGAKClRoZSBkYXRhYmFzZSB0b28hIFNvIHRoZSBpbmZvcm1hdGlvbiBpcyB0aGVyZS4KCmBgYHtyfQptJGZpbmQoKQpgYGAKCioqTGVzc29uIG51bWJlciAxIDogRmxleGliaWxpdHkgbWVhbnMgdGhhdCB0eXBvcyBjYW4gZ2V0IHVzIGludG8gdHJvdWJsZSB3aGVuIHVzaW5nIE1vbmdvREIhKioKCkVuZCBvZiBub3RlYm9vayBudW1iZXIgMSA6KQo=</div>
 
 
 

@@ -22,14 +22,14 @@ As simple as that! It is worth noticing that by default it will connect to:
 * Database: test
 * Collection: test
 
-So it should be empty so far. We can actually ask for databases when connected to the admin collection.
+So it should be empty so far. We can actually ask for databases when connected to the *admin* collection.
 
 ```{r}
 admin <- mongo(db = "admin")
 admin$run('{"listDatabases":1}')
 ```
 
-Funny... test database doesn't even exist! But we can ask for its collections.
+Funny... *test* database doesn't even exist! But we can ask for its collections.
 
 ```{r}
 m$run('{"listCollections":1}')
@@ -56,7 +56,6 @@ The database too! So the information is there.
 m$find()
 ```
 
-So, lesson number 1: 
+**Lesson number 1 : Flexibility means that typos can get us into trouble when using MongoDB!**
 
-* Typos can get us into trouble when using MongoDB!
-
+End of notebook number 1 :)
