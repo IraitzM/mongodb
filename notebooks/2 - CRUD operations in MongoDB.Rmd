@@ -17,7 +17,7 @@ a <- mongo(db = "test", collection = "agenda")
 
 ## Create
 
-We now know that doesn't matter if they don't exist, mongo will create them or return no data found because it's really hard to get errors from MongoDB. We can run MongoDB run command with native MongoDB syntax.
+We now know that doesn't matter if the collection or the database don't exist, MongoDB will create them or return no data found because it's really hard to get errors from MongoDB. We can run MongoDB run command with native MongoDB syntax.
 
 ```{r}
 q <- '{ 
@@ -27,7 +27,13 @@ q <- '{
 a$run(q)
 ```
 
-Or use methods provided by our driver, library or client.
+That's fine but usually our driver, library or client will provide simpler methods to do the same thing. In this case mongolite implements several of the routines often used in MongoDB.
+
+```{r}
+a
+```
+
+So, **insert** is one of them, allowing us to simplify our code (just a bit).
 
 ```{r}
 a$insert('{"name": "bob", "age": 42, "isActive" : true, "hobbies": ["surf"]}')
@@ -40,7 +46,7 @@ All inserted.
 
 ## Read
 
-More than read, one of the main functions to use with this type of databases is find. A functionality that applies a filter to our data and only returns the information that fits into the filter for a given collection.
+More than read, one of the main functions to use with this type of databases is **find**. A functionality that applies a filter to our data and only returns the information that fits into said filter for a given collection.
 
 ```{r}
 df <- a$find('{}')
@@ -63,9 +69,23 @@ Great! And what if we would like to find adults ( age > 18 ). That cannot be don
 * Logical: $and, $or, $not
 * Element: $exists, $type
 
-This are the basic and most used ones but plenty can be found into their documentation.
+These are some of the basic but most used ones. Plenty can be found into their documentation.
 
-So for our previous question, $gt (grater-than) operator will need to be used.
+Their usage is often defined as:
+
+```mongodb
+{ <field> : { <operator> : <value> } }
+```
+
+Or,
+
+```mongodb
+{ <operator> : { <field> : <value> } }
+```
+
+It will depend on the operator definition itself.
+
+So for our previous question, *$gt* (grater-than) operator will need to be used.
 
 ```{r}
 a$find('{"age" : {"$gt" : 18}}')
@@ -76,14 +96,16 @@ Or somebody active, over 30 and where the field hobbies exists.
 ```{r}
 a$find('{"$and" : [{"age" : {"$gte" : 30}},{"isActive" : {"$eq" : true}},{"hobbies" : { "$exists" : true}}]}')
 ```
-Great. If you see the whole document is returned from the database for every query. That makes sense when the whole document is required (working like a key-value store) but what if we would like to only address part of the information? (Kind of like columnar stores)
+Great. If you pay attention, the whole document is returned from the database for every query.
 
-That's what *projections* are for. Using projections, one can identify which part of the document is required. In mongolite, projection definition is called fields.
+That makes sense when the whole document is required (working like a key-value store) but what if we would like to only address part of the information? (Kind of like columnar stores)
+
+That's what *projections* are for. Using projections, one can identify which part of the document is required. In mongolite, projection definition is called **fields**.
 
 ```{r}
 a$find(query = '{"isActive" : true}', fields = '{"name" : true, "age" : 1}')
 ```
-Wait, what is that _id? That's the index of the document. Every document inside a collection has a unique identifier so that even two documents with same properties will be identified by their _id. That's actually the key in our key-value or column store-like functionality.
+Wait, what is that *_id* field? That's the index of the document. Every document inside a collection has a unique identifier so that even two documents with same properties will be identified by their *_id*. That's actually the key in our key-value or column store-like functionality.
 
 ```{r}
 a$insert('{"name" : "peter", "age" : 52}')
@@ -91,7 +113,7 @@ a$insert('{"name" : "peter", "age" : 52}')
 a$find(query = '{}', fields = '{"name" : true, "age" : 1}')
 ```
 
-Only, the _id can separate the two peters we just inserted. We can also provide our own _id but we will need to make sure it is unique for a given document.
+Only, the *_id* can separate the two "peter"s we just inserted. We can also provide our own *_id* but we will need to make sure it is unique for a given collection
 
 ```{r}
 a$insert('{"_id" : 1, "name" : "peter", "age" : 52}')
@@ -102,7 +124,7 @@ a$insert('{"_id" : 1, "name" : "peter", "age" : 52}')
 a$find(query = '{}', fields = '{"name" : true, "age" : 1}')
 ```
 
-We can set _id projection to false and that way the fields we initially wanted will be the only ones showing.
+We can set *_id* projection to false (false and zero are equally considered) and that way the fields we initially wanted will be the only ones showing.
 
 ```{r}
 a$find(query = '{}', fields = '{"name" : true, "age" : 1, "_id" : false}')
@@ -110,58 +132,68 @@ a$find(query = '{}', fields = '{"name" : true, "age" : 1, "_id" : false}')
 
 ### Arrays
 
-With arrays some interesting things happen. For example, what happens if we ask an array field to match a string it contains?
+Arrays and nested documents are kind of especial constructs that require some attention. Actually, MongoDB can show some unexpected behavior in those cases. 
+
+For example, what happens if we ask an array field to match a string?
 
 ```{r}
 a$find(query = '{"hobbies" : "padel"}')
 ```
 
-It looks for the existence inside the array itself. If you would like to ask for the one that holds the string in a certain position, you will need to reference that position using dot notation (0 padded).
+It looks for the existence inside the array itself. MondoDB instead of evaluating the equality searches inside the array. 
+
+If you would like to ask for the one that holds the string in a certain position, you will need to reference that position using dot notation (0 padded).
 
 ```{r}
 a$find(query = '{"hobbies.1" : "padel"}')
 ```
-That dot notation is used not only with arrays but also with fields containing nested JSON structures. Some interesting array operators can be found in the [documentation](https://docs.mongodb.com/manual/reference/operator/query-array/).
+That dot notation is used the same way with fields contained inside nested JSON structures. Some interesting array operators can be found in the [documentation](https://docs.mongodb.com/manual/reference/operator/query-array/).
 
 ## Update
 
-Of course, some documents will need to be updated. For that, documents will need to be identified and then some operators used to update those. For example let's update our 52 year old "peter"s.
+Of course, some documents inside our collection will need to be updated. For that, documents will need to be identified and then some operators used to update those. 
+
+For example let's update our 52 year old "peter"s using the *$set* operator that allows us to set a new key-value pair inside identified documents.
 
 ```{r}
 a$update('{"name" : "peter", "age" : 52}', '{"$set": {"hobbies" : 5}}')
 ```
 
-Ok, but it says matchedCount 1... which one?
+Ok, but it says matchedCount 1, we had like three "peter"s that match that description... which one is it then?
 
 ```{r}
 a$find('{"name" : "peter"}')
 ```
 
-Ok, that one. Wait, but why did it only update one of them? Well, MongoDB works like that. The first one that matches is updated. If all need to be updated, it needs to be said.
+Ok, that one! Wait, but why did it only update one of them? Well, MongoDB works like that. The first one that matches is updated. If all need to be updated, it needs to be said.
 
 ```{r}
 a$update('{"name" : "peter", "age" : 52}', '{"$set": {"hobbies" : 5}}', multiple = TRUE)
 a$find('{"name" : "peter"}')
 ```
 
-There also exists an operator to rename a field.
+There also exists an operator to *$rename* a field.
 
 ```{r}
 a$update('{"name" : "peter", "age" : 52}', '{"$rename": {"age" : "yearsold"}}')
 ```
 
-Or to increment a value inside a field.
+Or to increment a value inside a field, *$inc*.
 
 ```{r}
 a$update('{"name" : "peter", "age" : 52}', '{"$inc": {"yearsold" : 1.2}}')
 ```
+
 ```{r}
 a$find('{"name" : "peter"}')
 ```
 
-Some things happened there. We incremented a field that doesn't exists in a given document and that forces the rest of the documents that contain the field to be reinterpreted to the same type.
 
-That's odd but MongoDB is like that...
+Some things happened there. We did increment a field that doesn't exists in a given document and that forces the rest of the documents that contain the field to be reinterpreted to the same type when queried.
+
+That's odd but MongoDB is a weird fella...
+
+### Arrays
 
 There are some additional operators for array updates as well.
 
@@ -169,19 +201,26 @@ There are some additional operators for array updates as well.
 a$update('{"name" : "peter", "age" : 52}', '{"$set": {"hobbies" : ["mongodb"]}}', multiple = TRUE)
 a$update('{"name" : "peter", "age" : 52}', '{"$addToSet": {"hobbies" : "mongodb"}}')
 ```
+
+
 ```{r}
 a$find('{"name" : "peter"}', '{"age" : true, "hobbies" : 1}')
 ```
 
-No instance was updated given that addToSet adds only the content if the set doesn't already contain the given value. To force a value, **$push** operator need to be used.
+No instance was updated given that *$addToSet* adds only the content if the set doesn't already contain provided value. To force that, **$push** operator needs to be used.
 
 ```{r}
 a$update('{"name" : "peter", "age" : 52}', '{"$push": {"hobbies" : "mongodb"}}')
 a$update('{"name" : "peter", "age" : 52}', '{"$push": {"hobbies" : "mongodb"}}')
 ```
+
+
+
 ```{r}
 a$find('{"name" : "peter"}', '{"age" : true, "hobbies" : 1}')
 ```
+
+
 
 Of course multiple was not used so only one instance was updated... what a mess! Really tricky things can be done.
 
@@ -192,11 +231,12 @@ a$find('{"name" : "peter"}', '{"age" : true, "hobbies" : 1}')
 
 ## Delete
 
-Last but not least, deleting documents. In order to clean a little bit our mess.
+Last but not least, deleting documents. In order to clean up our mess.
 
 ```{r}
 a$remove('{"name" : "peter", "age" : {"$ne" : 43}}')
 ```
+
 
 ```{r}
 a$find()
@@ -204,3 +244,4 @@ a$find()
 
 Even the "peter" that had no age field was removed, as it matches the inequality.
 
+**Lesson number 2: MongoDB can do some counterintuitive things**

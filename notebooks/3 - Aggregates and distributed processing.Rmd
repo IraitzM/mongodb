@@ -15,7 +15,18 @@ We have seen how to create, update, find (filter) and delete. But what about com
 ```{r}
 a$find('{}', sort = '{"age" : 1}')
 ```
-But when more complicated things need to be done, aggregation pipeline is the way to go. It allows us to define separate phases that will interact between them in a pipeline fashion. So if we would like to replicate the previous example using the aggregation pipeline.
+```{r}
+a$count('{"name" : "peter"}')
+```
+
+But when more complicated things need to be done, aggregation pipeline is the way to go. It allows us to define separate phases that will interact between them in a pipeline fashion. 
+
+![](images/aggpipeline.png)
+
+So if we would like to replicate the previous example using the aggregation pipeline, two stages need to be defined:
+
+* *$match*: Find documents according to a given criteria
+* *$sort*: Sort them according to a field and ascending (1) or descending (-1) order
 
 ```{r}
 a$aggregate('[
@@ -24,7 +35,7 @@ a$aggregate('[
 ]')
 ```
 
-But I don't want the _id field.
+But I don't want the *_id* field, *$project* projection stage needs to be added at the end.
 
 ```{r}
 a$aggregate('[
@@ -34,7 +45,9 @@ a$aggregate('[
 ]')
 ```
 
-Good thing is that we can put different stages at will inside our pipeline. So imagine we would like to know which hobby is the most supported one. Given that we will work at document level, we will need to unwind all those values contained inside hobbies arrays.
+Good thing is that we can put different stages at will inside our pipeline. So imagine we want to know which hobby is the most supported one. 
+
+Given that MongoDB works at document level, we will need to *$unwind* all those values inside hobbies array in separate documents.
 
 ```{r}
 a$aggregate('[
@@ -42,7 +55,7 @@ a$aggregate('[
 ]')
 ```
 
-Now we have a document per hobby, so we can group them back, selecting the hobby as _id and counting the number of documents falling into that group.
+Now we have a document per hobby, so we can *group* them back, selecting the hobby as _id and counting the number of documents falling into that group. When dollar symbol ($) is used in front of a field it refers to the value contained by the field so there will be as many _id values as distinct values inside *hobbies* field.
 
 ```{r}
 a$aggregate('[
@@ -51,7 +64,7 @@ a$aggregate('[
 ]')
 ```
 
-And we would like to see it sorted in descending order.
+And we would like to see it sorted in descending order according to the amount of supporters.
 
 ```{r}
 a$aggregate('[
@@ -60,6 +73,8 @@ a$aggregate('[
             {"$sort" : {"support" : -1}}
 ]')
 ```
+
+Inside *$group* stages as many calculations as needed can be added. 
 
 So, it should be easy to get the average age for each hobby.
 
@@ -71,7 +86,7 @@ a$aggregate('[
 ]')
 ```
 
-Given that we will only consider the people whose age is less than 43.
+Given that we will only consider the people whose age is less than 43, an initial *$match* stage needs to be added.
 
 ```{r}
 a$aggregate('[
@@ -81,7 +96,7 @@ a$aggregate('[
             {"$sort" : {"support" : -1}}
 ]')
 ```
-And store it in a different collection.
+If those calculations are valuable for us but costly to compute, they can be stored inside a collection using a final *$out* stage.
 
 ```{r}
 a$aggregate('[
@@ -98,3 +113,5 @@ m$run('{"listCollections":1}')
 ```
 
 Good work.
+
+**Lesson number 3: Aggregation pipeline is the way to compute things in MongoDB**
