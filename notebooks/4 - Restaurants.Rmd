@@ -61,7 +61,7 @@ df <- r$find('')
 nrow(df)
 ```
 
-### Any restaurant that has been closed latelly?
+### Any restaurant that has been closed lately?
 
 ```{r}
 df <- r$find('')
