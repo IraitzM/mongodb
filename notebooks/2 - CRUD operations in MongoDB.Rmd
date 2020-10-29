@@ -207,7 +207,7 @@ a$update('{"name" : "peter", "age" : 52}', '{"$addToSet": {"hobbies" : "mongodb"
 a$find('{"name" : "peter"}', '{"age" : true, "hobbies" : 1}')
 ```
 
-No instance was updated given that *$addToSet* adds only the content if the set doesn't already contain provided value. To force that, **$push** operator needs to be used.
+No instance was updated given that *\$addToSet* adds only the content if the set doesn't already contain provided value. To force that, **\$push** operator needs to be used.
 
 ```{r}
 a$update('{"name" : "peter", "age" : 52}', '{"$push": {"hobbies" : "mongodb"}}')
