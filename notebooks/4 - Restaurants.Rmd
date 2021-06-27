@@ -100,7 +100,7 @@ How efficient is that query? As we already discussed, the only indexed field is 
 
 
 ```{r}
-system.time(r$find('{"borough" : "Mahattan"}'))
+system.time(r$find('{"borough" : "Manhattan"}'))
 ```
 
 Not bad but we can do a little bit better thanks to indexes. We can create an index on that field using Compass or just by calling following command.
@@ -113,7 +113,7 @@ r$index(add = '{"borough" : 1}')
 Thanks to that our query runs a little bit faster.
 
 ```{r}
-system.time(r$find('{"borough" : "Mahattan"}'))
+system.time(r$find('{"borough" : "Manhattan"}'))
 ```
 ![](images/explainidx.png)
 
@@ -176,6 +176,77 @@ r$find('{"$and" : [{ "address.coord" : { "$geoWithin" : { "$center" : [ [-74, 40
 Not as impressive as in Compass :)
 
 ![](images/closecoffee.png)
+
+# Application example
+
+We could use also tools such as Leaflet to show our results on a map.
+
+```{r}
+library(leaflet)
+
+m <- leaflet() %>%
+  addTiles() %>%  # Add default OpenStreetMap map tiles
+  addMarkers(lng=-74, lat=40.74, popup="Here I am")
+m
+```
+```{r}
+df <- r$find('{"$and" : [{ "address.coord" : { "$geoWithin" : { "$center" : [ [-74, 40.74 ] , 0.01 ] } } }, { "$text": { "$search": "cafe -tea" } }]}', fields = '{"name" : true, "_id" : 0, "address.coord" : true}')
+
+icons <- awesomeIcons(
+  markerColor = "red"
+)
+
+for (row in 1:nrow(df)) {
+    name <- df[row, "name"]
+    coord <- df[row, "address"]
+    lat = coord[["coord"]][[1]][1]
+    lon = coord[["coord"]][[1]][2]
+
+    m <- m %>% addAwesomeMarkers(lat, lon, icon = icons, popup = name)
+}
+m
+```
+
+```{r}
+
+find <- function(me, search_text){
+  query <- '{"$and" : [{ "address.coord" : { "$geoWithin" : { "$center" : [ ['
+  query <- paste0(query, me[1])
+  query <- paste0(query, ",")
+  query <- paste0(query, me[2])
+  query <- paste0(query, '] , 0.01 ] } } }, { "$text": {"$search": "')
+  query <- paste0(query, search_text)
+  query <- paste0(query, '" } }]}')
+  df <- r$find(query, fields = '{"name" : true, "_id" : 0, "address.coord" : true}')
+  
+  icons <- awesomeIcons(
+    markerColor = "red"
+  )
+  
+  m <- leaflet() %>%
+  addTiles() %>%  # Add default OpenStreetMap map tiles
+  addMarkers(lng=me[1], lat=me[2], popup="Here I am")
+  
+  for (row in 1:nrow(df)) {
+      name <- df[row, "name"]
+      coord <- df[row, "address"]
+      lat = coord[["coord"]][[1]][1]
+      lon = coord[["coord"]][[1]][2]
+  
+      m <- m %>% addAwesomeMarkers(lat, lon, icon = icons, popup = name)
+  }
+  
+  return(m)
+}
+```
+
+```{r}
+find(c(-74, 40.74), "chinese")
+```
+```{r}
+find(c(-74, 40.74), "kosher")
+```
+
 
 **Lesson number 4: Indexes are cool!**
 
